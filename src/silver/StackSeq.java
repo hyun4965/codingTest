@@ -9,11 +9,11 @@ public class StackSeq {
         StringBuilder sb = new StringBuilder();
         Stack<Integer> stack = new Stack<>();
 
-        int n = scanner.nextInt();
+        int n = sc.nextInt();
         int[] sequence = new int[n];
 
         for (int i = 0; i < n; i++) {
-            sequence[i] = scanner.nextInt();
+            sequence[i] = sc.nextInt();
         }
 
         int current = 1;
