@@ -5,7 +5,7 @@ import java.util.Stack;
 
 public class StackSeq {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
         StringBuilder sb = new StringBuilder();
         Stack<Integer> stack = new Stack<>();
 
@@ -42,6 +42,6 @@ public class StackSeq {
             System.out.println("NO");
         }
 
-        scanner.close();
+        sc.close();
     }
 }
