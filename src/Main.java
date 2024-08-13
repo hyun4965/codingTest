@@ -1,36 +1,59 @@
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.io.*;
+import java.util.Stack;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
 
-        int N = sc.nextInt();
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter (new OutputStreamWriter(System.out));
 
-        int[] arr = new int[N];
-        int[] arrSort = new int[N];
-        HashMap<Integer, Integer> RankMap = new HashMap<>();
+        Stack<String> leftStack = new Stack<>();
+        Stack<String> rightStack = new Stack<>();
 
-        for (int i = 0; i < N; i++) {
-            arr[i] = sc.nextInt();
-            arrSort[i] = arr[i];
+        String[] str =br.readLine().split("");
+
+        for(String s : str) {
+            leftStack.push(s);
         }
-        Arrays.sort(arrSort);
 
-        int rank = 0;
+        int N = Integer.parseInt(br.readLine());
 
-        for(int value : arrSort){
-            if(!RankMap.containsKey(value)){
-                RankMap.put(value,rank);
-                rank++;
+        for(int i = 0; i < N; i++) {
+            String command = br.readLine();
+            char c = command.charAt(0);
+
+            switch(c) {
+                case 'L':
+                    if(!leftStack.isEmpty())
+                        rightStack.push(leftStack.pop());
+
+                    break;
+                case 'D':
+                    if(!rightStack.isEmpty())
+                        leftStack.push(rightStack.pop());
+
+                    break;
+                case 'B':
+                    if(!leftStack.isEmpty()) {
+                        leftStack.pop();
+                    }
+                    break;
+                case 'P':
+                    char t = command.charAt(2);
+                    leftStack.push(String.valueOf(t));
+                    break;
+                default:
+                    break;
             }
         }
-        StringBuilder sb = new StringBuilder();
-        for(int value : arr){
-            sb.append(RankMap.get(value)).append(' ');
-        }
+        while(!leftStack.isEmpty())
+            rightStack.push(leftStack.pop());
 
-        System.out.println(sb);
+        while(!rightStack.isEmpty())
+            bw.write(rightStack.pop());
+
+        bw.flush();
+        br.close();
+        bw.close();
     }
 }
