@@ -24,7 +24,9 @@ public class BertAndGongjun {
 
         while (true) {
             int n = sc.nextInt();
-            if (n == 0) break; // 입력이 0이면 종료
+            if (n == 0) {
+                break;
+            }
 
             int count = 0;
             for (int i = n + 1; i <= 2 * n; i++) {
@@ -32,7 +34,6 @@ public class BertAndGongjun {
                     count++;
                 }
             }
-
             System.out.println(count);
         }
     }
