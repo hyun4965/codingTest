@@ -10,13 +10,13 @@ import java.util.StringTokenizer;
 
 public class DokeyDokey {
     public static void main(String[] args) throws Exception {
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        int N = Integer.parseInt(in.readLine());
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
 
         Queue<Integer> q = new LinkedList<>();
         Stack<Integer> s = new Stack<>();
 
-        StringTokenizer st = new StringTokenizer(in.readLine(), " ");
+        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
         for (int i = 0; i < N; i++) {
             q.offer(Integer.parseInt(st.nextToken()));
         }
