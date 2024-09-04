@@ -38,7 +38,7 @@ public class DokeyDokey {
             if (s.peek() == start) {
                 s.pop();
                 start++;
-            } else {    // 간식 순서 틀림
+            } else {
                 System.out.println("Sad");
                 return;
             }
