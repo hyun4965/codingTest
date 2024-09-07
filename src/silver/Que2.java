@@ -10,6 +10,7 @@ public class Que2 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         Deque<Integer> q = new ArrayDeque<>();
         StringBuilder sb = new StringBuilder();
+
         int N = Integer.parseInt(br.readLine());
 
         for (int i = 0; i < N; i++) {
