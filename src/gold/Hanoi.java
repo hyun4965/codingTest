@@ -15,10 +15,7 @@ public class Hanoi {
         // 전체 이동 횟수 출력 (2^N - 1)
         sb.append((int) (Math.pow(2, N) - 1)).append('\n');
 
-        // 이동 과정 처리
         MoveToTower(N, 1, 3, 2);
-
-        // 한 번에 출력
         System.out.println(sb.toString());
     }
 
