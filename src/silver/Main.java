@@ -1,34 +1,34 @@
 package silver;
 
 
-import java.util.Scanner;
-import java.util.Stack;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        Set<String> set = new HashSet<>();
+        StringBuilder sb= new StringBuilder();
 
-        int K = sc.nextInt();
-        int[] stack = new int[K]; // 최대 K개의 숫자를 저장할 수 있는 배열
-        int top = 0; // 현재 stack의 top을 나타내는 인덱스
+        int count=0;
+        int N = Integer.parseInt(br.readLine());
 
-        for (int i = 0; i < K; i++) {
-            int n = sc.nextInt();
-
-            if (n == 0) {
-                if (top > 0) {
-                    top--; // pop과 동일하게 top을 감소시킴
-                }
-            } else {
-                stack[top] = n; // push와 동일하게 top 위치에 값 저장
-                top++; // top을 증가시킴
+        for (int i = 0; i < N; i++) {
+            String s = br.readLine();
+            if(i==0 && !Objects.equals(s, "ENTER")){
+                return;
+            }
+            sb.append(s);
+            set.add(s);
+            if (!set.contains(sb.toString())) {
+                count+=1;
             }
         }
-
-        int num = 0;
-        for (int i = 0; i < top; i++) {
-            num += stack[i];
-        }
-        System.out.println(num);
+        System.out.println(count);
     }
 }
