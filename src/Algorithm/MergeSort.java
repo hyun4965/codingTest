@@ -25,7 +25,7 @@ public class MergeSort {
                 j++;
             }
             h++;
-        }
+        } 
 
         // 남은 원소 처리
         if (i > mid) {
