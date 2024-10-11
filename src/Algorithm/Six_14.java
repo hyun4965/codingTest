@@ -1,9 +1,11 @@
 package Algorithm;
 
 public class Six_14 {
+    static int[] MaxArr = new int[6];
+
     public static void main(String[] args) {
-        int[] p = {1, 5, 8, 9, 10, 17, 17, 20};
-        int i = 4;
+        int[] p = {3,5,10,12,14};
+        int i = 5;
 
         System.out.println(solution(p, i));
     }
