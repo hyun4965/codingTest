@@ -18,8 +18,8 @@ public class GreedyAlgorithm12 {
     }
     private static int coinChange(int[] d,int m,int n){
         /*
-            m은 다른 동전의 수
-            d는 액면가 저장 배열
+            m은 동전의 종류
+            d는 동전의 종류 저장하는 배열
             n거스름돈
          */
 
