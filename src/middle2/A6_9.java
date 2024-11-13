@@ -25,6 +25,16 @@ public class A6_9 {
         int n = 5; // 원하는 막대의 길이
         System.out.println("최대 이익: " + rodCutting(prices, n));
     }
+    public static int curRod_DP(int[] p,int n){
+        int[] maxSell = new int[n+1];
+        maxSell[0] = 0;
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= i; j++) {
+                maxSell[j] = Math.max(maxSell[j],maxSell[i-j]+p[i]);
+            }
+        }
+        return maxSell[n];
+    }
 }
 
 //
@@ -55,5 +65,3 @@ public class A6_9 {
 //        System.out.println("최대 판매 금액: " + maxSellValue);
 //    }
 //}
-
-
