@@ -1,31 +1,36 @@
 package Algorithm;
 
 import java.util.Scanner;
-import java.util.Stack;
 
 public class Main {
-    public static void main(String[] args) {
-    }
 
-    public static boolean solution(String s) {
-        boolean answer = true;
-        Stack<Integer> stack = new Stack<Integer>();
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if (c == '(') {
-                stack.push(i);
-            }else if (c == ')') {
-                stack.pop();
+    public static void main(String[] args) {
+
+        Scanner in = new Scanner(System.in);
+
+        int N = in.nextInt();
+        int K = in.nextInt();
+
+        long lo = 1;
+        long hi = K;
+
+        while(lo < hi) {
+
+            long mid = (lo + hi) / 2;
+            long count = 0;
+
+            for(int i = 1; i <= N; i++) {
+                count += Math.min(mid / i, N);
+            }
+
+            if(K <= count) {
+                hi = mid;
+            }
+            else {
+                lo = mid + 1;
             }
         }
-        if(stack.isEmpty()){
-            answer = false;
-        }else{
-            answer = true;
-        }
 
-        return answer;
+        System.out.println(lo);
     }
 }
-
-

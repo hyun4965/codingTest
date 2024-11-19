@@ -12,7 +12,6 @@ public class Fibonacci {
         arr[0] = 0;
         arr[1] = 1;
 
-        // N이 0인 경우는 바로 처리
         if (N == 0) {
             System.out.println(0);
             return;
