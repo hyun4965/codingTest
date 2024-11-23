@@ -8,7 +8,7 @@ public class Main {
 
     public static int[] solution(int brown, int yellow) {
         int total = brown + yellow;
-        int a=0;
+        int a=0
         for (int h = 1; h <= Math.sqrt(total); h++) {
             if (total % h == 0) {
                 int w = total / h;
