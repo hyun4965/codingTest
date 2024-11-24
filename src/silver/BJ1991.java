@@ -72,5 +72,4 @@ public class BJ1991 {
             sb.append(node.data);
         }
     }
-
 }
