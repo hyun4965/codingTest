@@ -1,23 +1,20 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println(solution(10,2));
+        int[] arr = {2,1,3,4,1};
+        System.out.println(solution("one4seveneight"));
     }
 
-    public static int[] solution(int brown, int yellow) {
-        int total = brown + yellow;
-        int a=0
-        for (int h = 1; h <= Math.sqrt(total); h++) {
-            if (total % h == 0) {
-                int w = total / h;
-                if ((w - 2) * (h - 2) == yellow) {
-                    return new int[] { w, h };
-                }
-            }
+    public static int solution(String s) {
+        String[] str = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+
+        for(int i = 0; i < str.length; i++){
+            s = s.replace(str[i], Integer.toString(i));
         }
 
-        return new int[0];
+        return Integer.parseInt(s);
     }
 }

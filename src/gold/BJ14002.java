@@ -5,7 +5,7 @@ import java.util.*;
 
 
 //백준 골드 14002
-public class LongSequence4 {
+public class BJ14002 {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
