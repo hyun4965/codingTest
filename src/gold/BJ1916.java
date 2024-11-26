@@ -14,7 +14,7 @@ public class BJ1916 {
 
         @Override
         public int compareTo(Node o) {
-            return this.cost - o.cost;
+            return Integer.compare(this.cost, o.cost);
         }
     }
 
@@ -76,3 +76,4 @@ public class BJ1916 {
         return dist[end];
     }
 }
+
