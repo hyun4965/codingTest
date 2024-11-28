@@ -17,8 +17,8 @@ public class A9_15 {
         for (int i = 1; i <= N; i++) {
             if (promising(A, k, i)) {
                 A[k] = i; // A[k]를 i로 설정
-                System.out.println("A[k]= "+A[k]+ " k = "+k);
-                System.out.println("i= "+i);
+//                System.out.println("A[k]= "+A[k]+ " k = "+k);
+//                System.out.println("i= "+i);
                 permute(A, k + 1, N); // 다음 단계 재귀 호출
             }
         }
