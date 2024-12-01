@@ -1,34 +1,32 @@
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.*;
-
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        int[] arr = {1, 5, 2, 6, 3, 7, 4};
+        int[][] com = {
+                {2, 5, 3},  // 첫 번째 행
+                {4, 4, 1},  // 두 번째 행
+                {1, 7, 3}   // 세 번째 행
+        };
+        System.out.println(solution(arr,com));
 
-        // 입력: 점의 개수
-        int N = sc.nextInt();
-        int[] x = new int[N];
-        int[] y = new int[N];
+    }
+    public static int[] solution(int[] array, int[][] commands) {
+        int[] answer = new int[commands.length];
+        for (int m = 0; m < commands.length; m++) {
+            int i = commands[m][0] - 1;
+            int j = commands[m][1];
+            int k = commands[m][2] - 1;
 
-        // 입력: 점의 좌표
-        for (int i = 0; i < N; i++) {
-            x[i] = sc.nextInt();
-            y[i] = sc.nextInt();
+            int[] a = new int[j - i];
+            for (int n = i; n < j; n++) {
+                a[n - i] = array[n];
+            }
+
+            Arrays.sort(a);
+
+            answer[m] = a[k];
         }
-
-        // Shoelace 공식 계산
-        double area = 0.0;
-        for (int i = 0; i < N; i++) {
-            int next = (i + 1) % N; // 마지막 점 다음에는 첫 번째 점으로 돌아감
-            area += (x[i] * y[next]) - (y[i] * x[next]);
-        }
-
-        area = Math.abs(area) / 2.0;
-
-        // 결과 출력: 소수점 첫째 자리까지 반올림
-        System.out.printf("%.1f\n", area);
+        return answer;
     }
 }
