@@ -23,7 +23,10 @@ public class A9_25 {
         if (i == n) {
             // 경로가 완성되었고, 마지막 정점이 시작 정점으로 돌아올 수 있는 경우
             if (G[path[i - 1]][path[0]] == 1) {
-                printPath();
+                for (int m = 0; m < n; m++) {
+                    System.out.print(path[m] + " ");
+                }
+                System.out.println(path[0]); // 마지막에 시작 정점으로 돌아오는 경로 추가
             }
             return;
         }
@@ -52,12 +55,5 @@ public class A9_25 {
             }
         }
         return true;
-    }
-
-    static void printPath() {
-        for (int i = 0; i < n; i++) {
-            System.out.print(path[i] + " ");
-        }
-        System.out.println(path[0]); // 마지막에 시작 정점으로 돌아오는 경로 추가
     }
 }
