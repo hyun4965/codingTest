@@ -15,6 +15,7 @@ public class BJ2667 {
         bfs();
         printf();
     }
+
     public static void insert() {
         Scanner sc = new Scanner(System.in);
         N = sc.nextInt();
@@ -33,17 +34,19 @@ public class BJ2667 {
     public static void bfs() {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                if (map[i][j] == 1 && !visited[i][j]) {
+                if (map[i][j] == 1 && !visited[i][j]) { //방문확인
+                    // queue 초기화 + 시작점 방문처리
                     Queue<int[]> queue = new LinkedList<>();
                     queue.offer(new int[]{i, j});
                     visited[i][j] = true;
                     int count = 1;
 
+                    //큐가 비어있지 않으면 계속 탐색
                     while (!queue.isEmpty()) {
                         int[] current = queue.poll();
                         int cx = current[0];
                         int cy = current[1];
-
+                        //상하좌우 탐색
                         for (int[] direction : d) {
                             int nx = cx + direction[0];
                             int ny = cy + direction[1];
