@@ -1,34 +1,24 @@
 package silver;
 
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-
-
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        Set<String> set = new HashSet<>();
-        StringBuilder sb= new StringBuilder();
+    public static void main(String[] args) {
+        System.out.println(solution(8,4,7));
+    }
 
-        int count=0;
-        int N = Integer.parseInt(br.readLine());
-
-        for (int i = 0; i < N; i++) {
-            String s = br.readLine();
-            if(i==0 && !Objects.equals(s, "ENTER")){
-                return;
-            }
-            sb.append(s);
-            set.add(s);
-            if (!set.contains(sb.toString())) {
-                count+=1;
-            }
+    public static int solution(int n, int a, int b){
+        int answer = 1;
+        int[] fight = new int[n+1];
+        fight[0] = 0;
+        for(int i = 1; i <= n; i++){
+            fight[i] = i;
         }
-        System.out.println(count);
+        while(true) {
+            if (a==b) {
+                return answer;
+            }
+            a/=2;
+            b/=2;
+            answer++;
+        }
     }
 }
