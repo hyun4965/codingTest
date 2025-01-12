@@ -16,8 +16,8 @@ public class BJ11401 {
 
         long[] factorial = calculateFactorials(N);
 
-        long numerator = factorial[N];
-        long denominator = (factorial[K] * factorial[N - K]) % MOD;
+        long numerator = factorial[N]; //분자
+        long denominator = (factorial[K] * factorial[N - K]) % MOD; //분모
 
         long result = (numerator * pow(denominator, MOD - 2)) % MOD;
 
