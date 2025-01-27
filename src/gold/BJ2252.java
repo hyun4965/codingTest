@@ -8,9 +8,9 @@ public class BJ2252 {
         int N = sc.nextInt(); //학생수
         int M = sc.nextInt(); //비교횟수
 
+        //그래프 및 진입 차수 초기화
         List<List<Integer>> graph = new ArrayList<>();
         int[] inDegree = new int[N + 1];
-
         for (int i = 0; i <= N; i++) {
             graph.add(new ArrayList<>());
         }
@@ -19,8 +19,8 @@ public class BJ2252 {
         for (int i = 0; i < M; i++) {
             int A = sc.nextInt();
             int B = sc.nextInt();
-            graph.get(A).add(B);
-            inDegree[B]++;
+            graph.get(A).add(B); //A -> B 그래프
+            inDegree[B]++; // B의 진입 차수 증가
         }
 
         // 위상 정렬을 위한 큐
