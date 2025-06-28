@@ -1,56 +1,48 @@
-import java.util.Arrays;
-
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
-    static int N;
-    static int[][] S;
-    static boolean[] visited;
-    static int minDifference = Integer.MAX_VALUE;
+    static class Tower {
+        int index;
+        int height;
+
+        public Tower(int index, int height) {
+            this.index = index;
+            this.height = height;
+        }
+    }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        N = sc.nextInt();
-        S = new int[N][N];
-        visited = new boolean[N];
+
+        int N = sc.nextInt();
+        int[] heights = new int[N];
+        for (int i = 0; i < N; i++) {
+            heights[i] = sc.nextInt();
+        }
+
+        int[] result = new int[N];
+        Stack<Tower> stack = new Stack<>();
 
         for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                S[i][j] = sc.nextInt();
-            }
-        }
+            int currHeight = heights[i];
 
-        backtrack(0, 0);
-        System.out.println(minDifference);
-        sc.close();
-    }
-
-    static void backtrack(int depth, int start) {
-        if (depth == N / 2) {
-            int startTeam = 0, linkTeam = 0;
-
-            for (int i = 0; i < N; i++) {
-                for (int j = 0; j < N; j++) {
-                    if (visited[i] && visited[j]) {
-                        startTeam += S[i][j]; // 스타트 팀 능력치 합산
-                    } else if (!visited[i] && !visited[j]) {
-                        linkTeam += S[i][j]; // 링크 팀 능력치 합산
-                    }
+            while (!stack.isEmpty()) {
+                if (stack.peek().height >= currHeight) {
+                    result[i] = stack.peek().index;
+                    break;
                 }
+                stack.pop();
             }
 
-            // 두 팀 간 능력치 차이 계산
-            int difference = Math.abs(startTeam - linkTeam);
-            minDifference = Math.min(minDifference, difference);
-            return;
+            if (stack.isEmpty()) {
+                result[i] = 0;
+            }
+
+            stack.push(new Tower(i + 1, currHeight)); // 1-based index
         }
 
-        for (int i = start; i < N; i++) {
-            if (!visited[i]) {
-                visited[i] = true; // 현재 선수를 스타트 팀으로 배정
-                backtrack(depth + 1, i + 1); // 다음 선수를 배정
-                visited[i] = false; // 배정을 해제하고 다음 경우 탐색
-            }
+        for (int res : result) {
+            System.out.print(res + " ");
         }
     }
 }
