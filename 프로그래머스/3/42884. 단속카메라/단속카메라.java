@@ -1,23 +1,22 @@
-import java.util.Arrays;
-import java.util.Comparator;
-
+import java.util.*;
 class Solution {
     public int solution(int[][] routes) {
-        Arrays.sort(routes, Comparator.comparingInt(a -> a[1]));
-
         int answer = 0;
-        int camera = Integer.MIN_VALUE;
-
-        for (int[] route : routes) {
-            int start = route[0];
-            int end = route[1];
-
-            if (start > camera) {
+        
+        Arrays.sort(routes, (a,b)->{
+            return a[1] - b[1];
+        });
+        int cam = Integer.MIN_VALUE;
+        
+        for(int[] route : routes){
+            if(cam<route[0]){
+                cam = route[1];
                 answer++;
-                camera = end;
             }
+            
         }
-
+        
+        
         return answer;
     }
 }
