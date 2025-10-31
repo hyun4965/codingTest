@@ -1,47 +1,53 @@
 import java.util.*;
 
 class Solution {
-    Set<Integer> numberSet = new HashSet<>();
+    
+    Set<Integer> uniqueNumbers = new HashSet<>();
 
     public int solution(String numbers) {
-        boolean[] visited = new boolean[numbers.length()];
-        dfs("", numbers, visited);
+        int answer = 0;
+        
+        String[] digits = numbers.split("");
+        
+        boolean[] visited = new boolean[digits.length];
 
-        int count = 0;
-        for (int num : numberSet) {
+        dfs("", digits, visited);
+
+        for (int num : uniqueNumbers) {
             if (isPrime(num)) {
-                count++;
+                answer++;
             }
         }
-
-        return count;
+        
+        return answer;
     }
 
-    private void dfs(String current, String numbers, boolean[] visited) {
-        if (!current.equals("")) {
-            numberSet.add(Integer.parseInt(current));
-        }
-
-        for (int i = 0; i < numbers.length(); i++) {
+    public void dfs(String currentNum, String[] digits, boolean[] visited) {
+    
+        for (int i = 0; i < digits.length; i++) {
             if (!visited[i]) {
+                String newNumStr = currentNum + digits[i];
+                int newNum = Integer.parseInt(newNumStr);
+                
+                uniqueNumbers.add(newNum);
                 visited[i] = true;
-                dfs(current + numbers.charAt(i), numbers, visited);
+                dfs(newNumStr, digits, visited);
                 visited[i] = false;
             }
         }
     }
-
-    private boolean isPrime(int n) {
-        // 1제외
-        if (n < 2) {
+    
+    static boolean isPrime(int n) {
+        if (n <= 1) {
             return false;
         }
-        
-        for (int i = 2; i <= Math.sqrt(n); i++) {
+
+        for (int i = 2; i * i <= n; i++) {
             if (n % i == 0) {
                 return false;
             }
         }
+
         return true;
     }
 }
