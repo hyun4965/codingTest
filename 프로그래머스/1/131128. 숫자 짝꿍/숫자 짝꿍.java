@@ -2,32 +2,34 @@ import java.util.*;
 
 class Solution {
     public String solution(String X, String Y) {
-        StringBuilder answer = new StringBuilder();
-        
-        int[] countX = new int[10];
-        int[] countY = new int[10];
+
+        int[] xCount = new int[10]; 
+        int[] yCount = new int[10];
 
         for (char c : X.toCharArray()) {
-            countX[c - '0']++;
+            xCount[c - '0']++;
         }
         for (char c : Y.toCharArray()) {
-            countY[c - '0']++;
-        }
-
-        for (int i = 9; i >= 0; i--) {
-            int m = Math.min(countX[i], countY[i]);
-            for (int j = 0; j < m; j++) {
-                answer.append(i);
-            }
-        }
-
-        if (answer.length() == 0) {
-            return "-1";
-        }
-        if (answer.charAt(0) == '0') {
-            return "0";
+            yCount[c - '0']++;
         }
         
-        return answer.toString();
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 9; i >= 0; i--) {
+            int minCount = Math.min(xCount[i], yCount[i]);
+            for (int j = 0; j < minCount; j++) {
+                sb.append(i);
+            }
+        }
+        
+        String answer = sb.toString();
+
+        if (answer.isEmpty()) {
+            return "-1";
+        } else if (answer.startsWith("0")) {
+            return "0";
+        } else {
+            return answer;
+        }
     }
 }
