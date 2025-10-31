@@ -1,30 +1,29 @@
 import java.util.*;
+
 class Solution {
-    
-    Map<String, PriorityQueue<String>> graph = new HashMap<>();
-    LinkedList<String> route = new LinkedList<>();
-    
+
+    static List<String> list = new ArrayList<>();
+    static boolean[] visited;
+
     public String[] solution(String[][] tickets) {
-        for (String[] ticket : tickets) {
-            String from = ticket[0];
-            String to = ticket[1];
-            graph.putIfAbsent(from, new PriorityQueue<>());
-            graph.get(from).add(to);
+        visited = new boolean[tickets.length];
+        dfs(0, "ICN", "ICN", tickets);
+        Collections.sort(list);
+        return list.get(0).split(" ");
+    }
+
+    static void dfs(int depth, String now, String path, String[][] tickets){
+        if (depth == tickets.length) {
+            list.add(path);
+            return;
         }
 
-        dfs("ICN");
-
-        return route.toArray(new String[0]);
-    } 
-    
-    private void dfs(String airport) {
-        // key 값은 있으면서, 비어있지 않으면 연결
-        while (graph.containsKey(airport) && !graph.get(airport).isEmpty()) {
-            String next = graph.get(airport).poll();
-            dfs(next);
-            
+        for (int i = 0; i < visited.length; i++) {
+            if (!visited[i] && now.equals(tickets[i][0])) {
+                visited[i] = true;
+                dfs(depth+1, tickets[i][1], path + " " +tickets[i][1], tickets);
+                visited[i] = false;
+            }
         }
-        
-        route.addFirst(airport);
     }
 }
