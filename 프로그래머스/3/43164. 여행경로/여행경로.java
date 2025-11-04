@@ -1,30 +1,51 @@
 import java.util.*;
+
 class Solution {
-    
-    Map<String, PriorityQueue<String>> graph = new HashMap<>();
-    LinkedList<String> route = new LinkedList<>();
-    
+
+    static List<String> list = new ArrayList<>();
+    static boolean[] visited;
+    static boolean isSuccess = false; 
+
     public String[] solution(String[][] tickets) {
-        for (String[] ticket : tickets) {
-            String from = ticket[0];
-            String to = ticket[1];
-            graph.putIfAbsent(from, new PriorityQueue<>());
-            graph.get(from).add(to);
-        }
+        
+        visited = new boolean[tickets.length]; 
+        
+        Arrays.sort(tickets, (a, b) -> {
+            if (a[0].equals(b[0])) {
+                return a[1].compareTo(b[1]);
+            }
+            return a[0].compareTo(b[0]);
+        });
+        
+        dfs("ICN", tickets);
+        
+        return list.toArray(new String[0]);
+    }
 
-        dfs("ICN");
-
-        return route.toArray(new String[0]);
-    } 
-    
-    private void dfs(String airport) {
-        // key 값은 있으면서, 비어있지 않으면 연결
-        while (graph.containsKey(airport) && !graph.get(airport).isEmpty()) {
-            String next = graph.get(airport).poll();
-            dfs(next);
-            
+    static void dfs(String now, String[][] tickets) {
+        list.add(now);
+        
+        if (list.size() == tickets.length + 1) {
+            isSuccess = true;
+            return;
         }
         
-        route.addFirst(airport);
+        for (int i = 0; i < tickets.length; i++) {
+            if (!visited[i] && tickets[i][0].equals(now)) {
+                
+                visited[i] = true; 
+                dfs(tickets[i][1], tickets); 
+                
+                if (isSuccess) {
+                    return;
+                }
+                
+                visited[i] = false; 
+            }
+        }
+
+        if (!isSuccess) {
+            list.remove(list.size() - 1);
+        }
     }
 }

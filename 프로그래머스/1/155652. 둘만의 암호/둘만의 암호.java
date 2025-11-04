@@ -1,35 +1,20 @@
-import java.util.*;
-
 class Solution {
     public String solution(String s, String skip, int index) {
-        
-        StringBuilder answer = new StringBuilder();
-
-        Set<Character> set = new HashSet<>();
-        
-        for (char c : skip.toCharArray()) {
-            set.add(c);
-        }
-
-        for (char ch : s.toCharArray()) {
-            int count = 0;
-            char cur = ch;
-
-            while (count < index) {
-                cur++;
-
-                if (cur > 'z') {
-                    cur = 'a';
+        String answer = "";
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            for (int j = 0; j < index; j++) {
+                c += 1;
+                if (c > 'z') {
+                    c -= 26;
                 }
-
-                if (!set.contains(cur)) {
-                    count++;
+                if (skip.contains(String.valueOf(c))) {
+                    j--;
                 }
             }
-
-            answer.append(cur);
+            answer += c;
         }
 
-        return answer.toString();
+        return answer;
     }
 }

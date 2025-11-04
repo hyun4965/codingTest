@@ -1,50 +1,50 @@
 import java.util.*;
 
 class Solution {
-    public static List<List<Integer>> graph;
     public int solution(int n, int[][] edge) {
-        
+        //양방향 그래프 생성
         List<List<Integer>> graph = new ArrayList<>();
         for (int i = 0; i <= n; i++) {
             graph.add(new ArrayList<>());
         }
-
+        
         for (int[] e : edge) {
-            int from = e[0];
-            int to = e[1];
-            graph.get(from).add(to);
-            graph.get(to).add(from);
+            int a = e[0];
+            int b = e[1];
+            graph.get(a).add(b);
+            graph.get(b).add(a);
         }
-        boolean[] visited = new boolean[n+1];
-        return bfs(graph,n,visited);
-    
-    }
-    static public int bfs(List<List<Integer>> graph, int n, boolean[] visited){
-        int answer = 0;
-        Queue<int[]> que = new LinkedList<>();
-        que.add(new int[]{1,0});
-        visited[1] = true;
-        int maxDepth=0;
-        while(!que.isEmpty()){
-            int[] arr = que.poll();
-            int v = arr[0];
-            int depth = arr[1];
+        
+
+        int[] distance = new int[n + 1];
+        Arrays.fill(distance, -1);
+
+        Queue<Integer> queue = new LinkedList<>();
+        
+        queue.add(1);
+        distance[1] = 0; 
+        
+        int maxDistance = 0;
+
+        while (!queue.isEmpty()) {
+            int now = queue.poll();
             
-            if(depth == maxDepth){
-                answer ++;
-            }else if(maxDepth < depth){
-                answer = 1;
-                maxDepth = depth;
-            }
-            for(int i=0; i<graph.get(v).size();i++){
-                int w = graph.get(v).get(i);
-                if(!visited[w]){
-                    que.add(new int[]{w,depth+1});
-                    visited[w]= true;
+            for (int neighbor : graph.get(now)) {
+                if (distance[neighbor] == -1) {
+                    distance[neighbor] = distance[now] + 1;
+                    queue.add(neighbor);
+                    maxDistance = Math.max(maxDistance, distance[neighbor]);
                 }
             }
         }
+        
+        int answer = 0;
+        for (int i = 1; i <= n; i++) {
+            if (distance[i] == maxDistance) {
+                answer++;
+            }
+        }
+        
         return answer;
     }
-
 }

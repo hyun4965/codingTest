@@ -1,28 +1,52 @@
-import java.util.*;
-
 class Solution {
+    final int MOD = 1_000_000_007;
+
     public int solution(int m, int n, int[][] puddles) {
-        int mod = 1000000007;
+        // 1. dp 배열 생성 (m행 n열)
+        // 문제의 (m, n)은 (열, 행)이 아니라 (m행, n열)을 의미하는 것으로 보입니다.
+        // 하지만 puddles가 [x, y] (열, 행)으로 주어지므로,
+        // 배열을 [n][m] (n행 m열)로 만들고 (행, 열)로 접근하는 것이 덜 헷갈립니다.
         
-        int[][] board = new int[n + 1][m + 1];
-        for(int i = 0; i < puddles.length; i++) {
-            board[puddles[i][1]][puddles[i][0]] = -1; 
+        // m, n을 (열, 행)으로 통일
+        int numCols = m;
+        int numRows = n;
+        
+        // dp[row][col]
+        long[][] dp = new long[numRows][numCols];
+        
+        // 2. 웅덩이 표시 (puddle = [col, row])
+        for (int[] puddle : puddles) {
+            int col = puddle[0] - 1; // 0-based index
+            int row = puddle[1] - 1; // 0-based index
+            dp[row][col] = -1; // -1로 웅덩이 표시
         }
         
-        board[1][1] = 1;
-        for(int i = 1; i < n + 1; i++) {
-            for(int j = 1; j < m + 1; j++) {
-                if(board[i][j] == -1) {
+        // 3. 시작점 초기화
+        dp[0][0] = 1;
+        
+        // 4. DP 점화식 적용
+        for (int i = 0; i < numRows; i++) {
+            for (int j = 0; j < numCols; j++) {
+                
+                // 웅덩이면 0으로 만들고 건너뛰기
+                if (dp[i][j] == -1) {
+                    dp[i][j] = 0;
                     continue;
                 }
-                if(board[i - 1][j] > 0) {
-                    board[i][j] += board[i - 1][j] % mod;
+                
+                // 위에서 오는 경우 (i > 0)
+                if (i > 0) {
+                    dp[i][j] = (dp[i][j] + dp[i-1][j]) % MOD;
                 }
-                if(board[i][j - 1] > 0) {
-                    board[i][j] += board[i][j - 1] % mod;
+                
+                // 왼쪽에서 오는 경우 (j > 0)
+                if (j > 0) {
+                    dp[i][j] = (dp[i][j] + dp[i][j-1]) % MOD;
                 }
             }
         }
-        return board[n][m] % mod;
+        
+        // 5. 최종 결과 반환
+        return (int) dp[numRows - 1][numCols - 1];
     }
 }
