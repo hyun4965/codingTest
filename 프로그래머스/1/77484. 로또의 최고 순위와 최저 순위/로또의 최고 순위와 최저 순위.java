@@ -1,45 +1,24 @@
-import java.util.*;
-
 class Solution {
     public int[] solution(int[] lottos, int[] win_nums) {
+        int[] rank = {6, 6, 5, 4, 3, 2, 1};
         int[] answer = new int[2];
-        Arrays.sort(win_nums);
-
-        int high = 0; 
-        int low = 0; 
-        int zeroCount = 0;
-
-        for (int i = 0; i < 6; i++) {
+        
+        for (int i = 0; i < lottos.length; i ++) {
             if (lottos[i] == 0) {
-                zeroCount++;
+                answer[0]++;
+                continue;
             }
-        }
-
-        for (int i = 0; i < 6; i++) {
-            if (lottos[i] == 0) {
-                continue; 
-            }
-            for (int j = 0; j < 6; j++) {
+            for (int j = 0; j < win_nums.length; j++) {
                 if (lottos[i] == win_nums[j]) {
-                    low++;
-                    break;
+                    answer[0]++;
+                    answer[1]++;
                 }
             }
         }
-
-        high = low + zeroCount;
-
-        answer[0] = getRank(high);
-        answer[1] = getRank(low);
-
+        
+        answer[0] = rank[answer[0]];
+        answer[1] = rank[answer[1]];
+        
         return answer;
-    }
-
-    private int getRank(int count) {
-        if (count >= 2) {
-            return 7 - count;
-        } else {
-            return 6;
-        }
     }
 }

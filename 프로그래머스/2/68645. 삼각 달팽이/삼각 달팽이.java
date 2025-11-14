@@ -2,33 +2,35 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int n) {
-        int total = n * (n + 1) / 2;   // 채워야 할 개수
-        int[] answer = new int[total];
+        int[] answer = new int[(n*(n+1))/2];
+        int[][] matrix = new int[n][n];
 
-        int dir = 0;
-        int r = -1, c = 0;     
-        int val = 1;
+        int x = -1, y = 0;
+        int num = 1;
 
-        Deque<Integer> seg = new ArrayDeque<>();
-        for (int len = n; len >= 1; len--) seg.addLast(len);
-
-        while (!seg.isEmpty()) {
-            int len = seg.pollFirst();
-            for (int step = 0; step < len; step++) {
-                if (dir == 0) {        
-                    r++;
-                } else if (dir == 1) { 
-                    c++;
-                } else {             
-                    r--;
-                    c--;
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) { 	
+                if (i % 3 == 0) {
+                    x++;
+                } else if (i % 3 == 1) {
+                    y++;
+                } else if (i % 3 == 2) {
+                    x--;
+                    y--;
                 }
-                // (r, c) -> 펼친 인덱스: r행 시작 오프셋은 삼각수 r*(r1)/2
-                int idx = r * (r + 1) / 2 + c;
-                answer[idx] = val++;
+                matrix[x][y] = num++;
             }
-            dir = (dir + 1) % 3; 
         }
+        
+        int k = 0;
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < n; j++) {
+                if(matrix[i][j] == 0) 
+                	break;
+                answer[k++] = matrix[i][j];
+            }
+        }
+
         return answer;
     }
 }
