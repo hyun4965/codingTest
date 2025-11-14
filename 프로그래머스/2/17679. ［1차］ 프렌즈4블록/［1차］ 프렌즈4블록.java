@@ -2,16 +2,15 @@ import java.util.*;
 class Solution {
     public int solution(int m, int n, String[] board) {
         int answer = 0;
-        
         char[][] table = new char[m][n];
-        
         for(int i=0;i<m;i++){
             table[i]=board[m-i-1].toCharArray();
         }
-        
+        //몇번 지워질지 모르니 무한반복
         while(true){
         boolean flag=true;
         boolean[][] check =new boolean[m][n];
+        //블록체크
         for(int i=0;i<m-1;i++){
             for(int j=0;j<n-1;j++){
                 if(table[i][j]=='-'){
@@ -28,9 +27,11 @@ class Solution {
             }
         }
             
+         //블록체크가 안됬으면 == 지울 블록이없으면 반복문 종료
         if(flag){
             break;
         }
+        //체크된 블록 삭제("-"으로 변환)
         for(int i=0;i<m;i++){
             for(int j=0;j<n;j++){
                 if(check[i][j]){
@@ -39,6 +40,7 @@ class Solution {
                 }
             }
         }
+        //블록 내리기 (윗블록과 스왑하기)
         for(int i=0;i<m;i++){
             for(int j=0;j<n;j++){
                 if(table[i][j]=='-'){
