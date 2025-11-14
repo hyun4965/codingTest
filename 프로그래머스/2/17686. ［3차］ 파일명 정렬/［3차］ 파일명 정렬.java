@@ -1,61 +1,74 @@
-import java.util.*;
-
+import java.util.Arrays;
+import java.util.Comparator;
 class Solution {
-    static class FileEntry {
-        String original;   
-        String headLower;  
-        int number;        
-        int index;         
-        
-        FileEntry(String original, String headLower, int number, int index) {
-            this.original = original;
-            this.headLower = headLower;
-            this.number = number;
-            this.index = index;
-        }
-    }
-
+    private class Record{
+		String file;
+		String head;
+		int number;
+		
+		public Record(String file, String head, int number) {
+			super();
+			this.file = file;
+			this.head = head;
+			this.number = number;
+		}
+		
+		
+	}
+	
     public String[] solution(String[] files) {
-        int n = files.length;
-        FileEntry[] arr = new FileEntry[n];
-
-        for (int i = 0; i < n; i++) {
-            arr[i] = parse(files[i], i);
-        }
-
-        Arrays.sort(arr, (a, b) -> {
-            int c1 = a.headLower.compareTo(b.headLower);
-            if (c1 != 0) return c1;
-
-            int c2 = Integer.compare(a.number, b.number);
-            if (c2 != 0) return c2;
-
-            return Integer.compare(a.index, b.index);
-        });
-
-        String[] answer = new String[n];
-        for (int i = 0; i < n; i++) answer[i] = arr[i].original;
+        String[] answer = new String[files.length];
+        
+        Record[] record = new Record[files.length];
+        for (int i = 0; i < files.length; i++) {
+			String[] hnt = find_hnt(files[i]);
+			Record r = new Record(files[i], hnt[0], Integer.parseInt(hnt[1]));
+			record[i] = r;
+		}
+        
+        Arrays.sort(record, new Comparator<Record>() {
+			@Override
+			public int compare(Record o1, Record o2) {
+				if (o1.head.equals(o2.head)) {
+					return o1.number - o2.number;
+				} else {
+					return o1.head.compareTo(o2.head);
+				}
+			}
+		});
+        
+        for (int i = 0; i < record.length; i++) {
+			answer[i] = record[i].file;
+		}
+        
         return answer;
     }
-
-    private FileEntry parse(String file, int idx) {
-        int len = file.length();
-        int i = 0;
-
-        while (i < len && !Character.isDigit(file.charAt(i))) i++;
-        String head = file.substring(0, i);
-        String headLower = head.toLowerCase();
-
-        int j = i;
-        int count = 0;
-        while (j < len && Character.isDigit(file.charAt(j)) && count < 5) {
-            j++;
-            count++;
-        }
-        String numStr = file.substring(i, j);
-
-        int number = Integer.parseInt(numStr);
-
-        return new FileEntry(file, headLower, number, idx);
-    }
+    
+    private String[] find_hnt(String str) {
+		int[] hnt = new int[2];
+		
+		int i = 0;
+		while(i < str.length() && (str.charAt(i) < '0' || str.charAt(i) > '9')) {
+			i++;
+		}
+		hnt[0] = i;
+		
+		int j = i;
+		int count = 0;
+		while(j < str.length() && (str.charAt(j) >= '0' && str.charAt(j) <= '9')) {
+			if (count == 5)
+				break;
+			j++;
+			count++;
+		}
+		hnt[1] = j;
+		
+		String head = str.substring(0, hnt[0]);
+		head = head.toLowerCase();
+        String number = str.substring(hnt[0], hnt[1]);
+        
+        String[] shn = {head, number};
+        
+        return shn;
+	}
 }
