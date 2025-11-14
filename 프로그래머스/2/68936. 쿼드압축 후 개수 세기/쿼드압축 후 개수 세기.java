@@ -1,33 +1,44 @@
 class Solution {
-    int[] answer = new int[2]; // [0의 개수, 1의 개수]
 
+    static int[] answer = new int[2];
+    
     public int[] solution(int[][] arr) {
-        recall(arr, 0, 0, arr.length);
+        
+        comp(arr, 0, 0, arr.length);
+        
         return answer;
     }
+    
+    private static void comp(int[][] arr, int x, int y, int length) {
+        int s = arr[x][y];
+        boolean canComp = true;
+		
+        if(length == 1) {
+            if(s == 0) answer[0]++;
+            else answer[1]++;
 
-    private void recall(int[][] arr, int r, int c, int size) {
-        if (isSame(arr, r, c, size)) {
-            answer[arr[r][c]]++;
             return;
         }
 
-        int newSize = size / 2;
-        recall(arr, r, c, newSize); 
-        recall(arr, r, c + newSize, newSize); 
-        recall(arr, r + newSize, c, newSize); 
-        recall(arr, r + newSize, c + newSize, newSize); 
-    }
-
-    private boolean isSame(int[][] arr, int r, int c, int size) {
-        int value = arr[r][c];
-        for (int i = r; i < r + size; i++) {
-            for (int j = c; j < c + size; j++) {
-                if (arr[i][j] != value) {
-                    return false;
+        check:
+        for(int i = x; i < x + length; i++) {
+            for(int j = y; j < y + length; j++){
+                if(arr[i][j] != s) {
+                    canComp = false;
+                    break check;
                 }
             }
         }
-        return true;
+
+        if(canComp) { 
+            if(s == 0) answer[0]++;
+            else answer[1]++;
+        } else { 
+            for(int i = x; i < x + length; i += length / 2) {
+                for(int j = y; j < y + length; j += length / 2) {
+                    comp(arr, i, j, length / 2);
+                }
+            }
+        }
     }
 }
