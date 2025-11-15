@@ -1,37 +1,31 @@
-import java.util.Stack;
-import java.util.Deque;
-import java.util.ArrayDeque;
-
+import java.util.*;
 class Solution {
     public int solution(int[][] board, int[] moves) {
         int answer = 0;
-
-        Stack<Integer> stack = new Stack<>(); 
-        Deque<Integer> que = new ArrayDeque<>(); 
-
-        for (int m : moves) {
-            que.addLast(m);
-        }
-        while (!que.isEmpty()) {
-            int num = que.pollFirst(); 
-            int col = num - 1; 
-
-            for (int row = 0; row < board.length; row++) {
-                if (board[row][col] != 0) {
-                    int doll = board[row][col];
-                    board[row][col] = 0;
-
-                    if (!stack.isEmpty() && stack.peek() == doll) {
+        
+        Stack<Integer> stack = new Stack<>();
+        
+        for(int i=0; i<moves.length; i++){
+            int num = moves[i];
+            int col = num - 1;  
+            for(int j=0; j<board.length; j++){
+                if(board[j][col] == 0){
+                    continue;
+                }else{
+                    int pick = board[j][col];
+                    if( !stack.isEmpty() && pick == stack.peek()){
                         stack.pop();
-                        answer += 2;
-                    } else {
-                        stack.push(doll);
+                        answer +=2;
+                    }else{
+                        stack.push(pick);
                     }
-                    break; 
+                    board[j][col] = 0;
+                    break;
                 }
             }
+            
         }
-
+        
         return answer;
     }
 }
