@@ -1,43 +1,37 @@
-import java.util.*;
-
 class Solution {
     public int solution(int[] arrayA, int[] arrayB) {
         int answer = 0;
-        Arrays.sort(arrayA);
-        Arrays.sort(arrayB);
-        
-        int gcdA = arrayA[0];
-        int gcdB = arrayB[0];
-        
-        for(int i=0; i<arrayA.length; i++){
-            gcdA = gcd(arrayA[i], gcdA);
-            gcdB = gcd(arrayB[i], gcdB);
+        int gA = arrayA[0];
+        int gB = arrayB[0];
+
+        for(int i=1 ; i<arrayA.length; i++){
+            gA = gcd(gA,arrayA[i]);
         }
+        for (int i = 1; i < arrayB.length; i++) {
+            gB = gcd(gB, arrayB[i]);
+        }        
+        int answerA = check(gA,arrayB);
+        int answerB = check(gB,arrayA);
         
-        
-      if(!canDivide(arrayB, gcdA)){
-            answer = Math.max(answer, gcdA);
-        }
-        
-        if(!canDivide(arrayA, gcdB)){
-            answer = Math.max(answer, gcdB);
-        }
-        
-        
-        return answer;
+        return Math.max(answerA,answerB);
     }
-    
-    public static int gcd(int a, int b){
-        if(b==0) return a;
-        else return gcd(b, a%b);
+    private int gcd(int a,int b){
+        while(b!=0){
+            int c = a%b;
+            a=b;
+            b=c;
+        }
+        return a;
     }
-    
-    public static boolean canDivide(int[] array, int gcd){
-        for(int num:array){
-            if(num%gcd==0){
-                return true;
+    private int check(int g, int[] other) {
+        if (g == 0) {
+            return 0;
+        }
+        for (int x : other) {
+            if (x % g == 0) {
+                return 0; 
             }
         }
-        return false;
+        return g;
     }
 }
