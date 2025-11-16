@@ -1,42 +1,34 @@
 class Solution {
     public String solution(String new_id) {
         String answer = new_id.toLowerCase();
-
-        StringBuilder step2 = new StringBuilder();
-        for (char c : answer.toCharArray()) {
-            if ((c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == '-' || c == '_' || c == '.') {
-                step2.append(c);
-            }
-        }
-        answer = step2.toString();
-
+        
+        answer = answer.replaceAll("[^a-z0-9-_.]", "");
+        
         while (answer.contains("..")) {
             answer = answer.replace("..", ".");
         }
-
-        if (!answer.isEmpty() && answer.startsWith(".")) {
+        
+        if (answer.charAt(0) == '.') {
             answer = answer.substring(1);
         }
-        if (!answer.isEmpty() && answer.endsWith(".")) {
+        if (answer.length() > 0 && answer.charAt(answer.length() - 1) == '.') {
             answer = answer.substring(0, answer.length() - 1);
         }
-
-        if (answer.isEmpty()) {
-            answer = "a";
-        }
-
-        if (answer.length() >= 16) {
+        
+        if (answer.length() == 0) answer = "a";
+        
+        if (answer.length() > 15) {
             answer = answer.substring(0, 15);
-            if (answer.endsWith(".")) {
+            if (answer.charAt(answer.length() - 1) == '.') {
                 answer = answer.substring(0, answer.length() - 1);
             }
         }
-
-        StringBuilder step7 = new StringBuilder(answer);
-        while (step7.length() <= 2) {
-            step7.append(step7.charAt(step7.length() - 1));
+        
+        if (answer.length() == 1) {
+            answer += String.valueOf(answer.charAt(0)) + String.valueOf(answer.charAt(0));
+        } else if (answer.length() == 2) {
+            answer += String.valueOf(answer.charAt(1));
         }
-        answer = step7.toString();
         
         return answer;
     }
