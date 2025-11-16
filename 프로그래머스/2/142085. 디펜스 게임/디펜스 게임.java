@@ -1,30 +1,24 @@
 import java.util.*;
-
 class Solution {
-    public int solution(int n, int k, int[] enemy) {
-        if (k >= enemy.length) {
-            return enemy.length;
-        }
+	public int solution(int n, int k, int[] enemy) {
+		int answer = 0;
 
-        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
-        int roundIndex = 0;
+		PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
 
-        for (int round : enemy) {
-            n -= round;
-            pq.add(round);
+		for (int i = 0; i < enemy.length; i++) {
+			n -= enemy[i];
+			pq.add(enemy[i]);
 
-            if (n < 0) {
-                if (k <= 0) {
-                    return roundIndex;
-                }
-                
-                k--;
-                n += pq.poll();
-            }
-            
-            roundIndex++;
-        }
-
-        return enemy.length;
-    }
+			if (n < 0) {
+				if (k > 0) {
+					n += pq.poll();
+					k--;
+				} else {
+					break;
+				}
+			}
+			answer++;
+		}
+		return answer;
+	}
 }
