@@ -2,46 +2,44 @@ import java.util.*;
 
 class Solution {
     public int[] solution(String[] gems) {
-        int[] answer = new int[2];
+        int len = gems.length;
 
         Set<String> set = new HashSet<>();
-        for (int i = 0; i < gems.length; i++) {
-            set.add(gems[i]);
+        for (String g : gems) {
+            set.add(g);
         }
-        int needKinds = set.size();
+        int kind = set.size();  
 
-        Map<String, Integer> freq = new HashMap<>();
-        int left = 0;                    
-        int bestL = 0;
-        int bestR = gems.length - 1;
-        int bestLen = bestR - bestL; 
+        Map<String, Integer> map = new HashMap<>();
+        int left = 0, right = 0;
+        int bestL = 0, bestR = len - 1;
+        int minLen = Integer.MAX_VALUE;
 
-        for (int right = 0; right < gems.length; right++) {
-            freq.put(gems[right], freq.getOrDefault(gems[right], 0) + 1);
-
-            while (freq.size() == needKinds) {
-                int currLen = right - left;
-                if (currLen < bestLen || (currLen == bestLen && left < bestL)) {
-                    bestLen = currLen;
+        while (true) {
+            if (map.size() < kind) {
+                if (right == len) {
+                    break;  
+                }
+                map.put(gems[right], map.getOrDefault(gems[right], 0) + 1);
+                right++;
+            } else {
+                if (right - left < minLen) {
+                    minLen = right - left;
                     bestL = left;
-                    bestR = right;
+                    bestR = right - 1; 
                 }
 
-                String gl = gems[left];
-                int cnt = freq.get(gl) - 1;
-                
-                if (cnt == 0) {
-                    freq.remove(gl);
-                }else {
-                    freq.put(gl, cnt);
+                String leftGem = gems[left];
+                int cnt = map.get(leftGem);
+                if (cnt == 1) {
+                    map.remove(leftGem);
+                } else {
+                    map.put(leftGem, cnt - 1);
                 }
-
                 left++;
             }
         }
 
-        answer[0] = bestL + 1;
-        answer[1] = bestR + 1;
-        return answer;
+        return new int[]{bestL + 1, bestR + 1};
     }
 }
