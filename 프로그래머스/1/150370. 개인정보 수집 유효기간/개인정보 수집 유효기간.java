@@ -2,47 +2,47 @@ import java.util.*;
 
 class Solution {
     public int[] solution(String today, String[] terms, String[] privacies) {
-        List<Integer> expiredList = new ArrayList<>();
-        
-        Map<String, Integer> termsMap = new HashMap<>();
-        for (String term : terms) {
-            String[] parts = term.split(" ");
-            termsMap.put(parts[0], Integer.parseInt(parts[1]));
+        List<Integer> list = new ArrayList<>();
+
+        String[] day = today.split("\\."); 
+        int todayNum = Integer.parseInt(day[0]) * 12 * 28
+                     + Integer.parseInt(day[1]) * 28
+                     + Integer.parseInt(day[2]);
+
+        Map<Character, Integer> termMap = new HashMap<>();
+        for (String t : terms) {  
+            String[] sp = t.split(" ");    
+            char type = sp[0].charAt(0);
+            int months = Integer.parseInt(sp[1]); 
+            termMap.put(type, months);
         }
-        
-        int todayInDays = dateToDays(today);
-        
+
         for (int i = 0; i < privacies.length; i++) {
-            String[] privacyParts = privacies[i].split(" ");
-            String collectionDateStr = privacyParts[0];
-            String termType = privacyParts[1];
-            
-            int collectionDateInDays = dateToDays(collectionDateStr);
-            
-            int durationInMonths = termsMap.get(termType);
-            
-            int expirationDateInDays = collectionDateInDays + (durationInMonths * 28);
-            
-            if (todayInDays >= expirationDateInDays) {
-                expiredList.add(i + 1); 
+            String p = privacies[i];
+            String[] sp = p.split(" ");
+
+            String dateStr = sp[0]; 
+            char type = sp[1].charAt(0); 
+
+            String[] collect = dateStr.split("\\.");
+            int collectNum = Integer.parseInt(collect[0]) * 12 * 28
+                           + Integer.parseInt(collect[1]) * 28
+                           + Integer.parseInt(collect[2]);
+
+            int months = termMap.get(type);
+
+            int expireNum = collectNum + months * 28 - 1;
+
+            if (todayNum > expireNum) {
+                list.add(i + 1); 
             }
         }
-        
-        int[] answer = new int[expiredList.size()];
 
-        for (int i = 0; i < expiredList.size(); i++) {
-            answer[i] = expiredList.get(i); 
+        int[] answer = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            answer[i] = list.get(i);
         }
 
-        return answer;    
-    }
-    
-    private int dateToDays(String date) {
-        String[] ymd = date.split("\\."); 
-        int year = Integer.parseInt(ymd[0]);
-        int month = Integer.parseInt(ymd[1]);
-        int day = Integer.parseInt(ymd[2]);
-        
-        return (year * 12 * 28) + (month * 28) + day;
+        return answer;
     }
 }
