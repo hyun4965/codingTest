@@ -1,35 +1,23 @@
 class Solution {
     public int[] solution(String[] wallpaper) {
-        int h = wallpaper.length;
-        int w = wallpaper[0].length();
 
+        int lux = wallpaper.length; 
+        int luy = wallpaper[0].length(); 
+        int rdx = -1;
+        int rdy = -1;
 
-        int minRow = Integer.MAX_VALUE;
-        int minCol = Integer.MAX_VALUE;
-        int maxRow = -1;
-        int maxCol = -1;
-
-        for (int i = 0; i < h; i++) {
-            String row = wallpaper[i];
-            for (int j = 0; j < w; j++) {
-                if (row.charAt(j) == '#') {
-                    if (i < minRow) {
-                        minRow = i;
-                    }
-                    if (j < minCol) {
-                        minCol = j;
-                    }
-                    if (i > maxRow) {
-                        maxRow = i;
-                    }
-                    if (j > maxCol) {
-                        maxCol = j;
-                    }
+        for (int i = 0; i < wallpaper.length; i++) {
+            String str = wallpaper[i];
+            for (int j = 0; j < str.length(); j++) {
+                if (str.charAt(j) == '#') {
+                    if (i < lux) lux = i;
+                    if (j < luy) luy = j;
+                    if (i > rdx) rdx = i;
+                    if (j > rdy) rdy = j;
                 }
             }
         }
 
-
-        return new int[] { minRow, minCol, maxRow + 1, maxCol + 1 };
+        return new int[] {lux, luy, rdx + 1, rdy + 1};
     }
 }
