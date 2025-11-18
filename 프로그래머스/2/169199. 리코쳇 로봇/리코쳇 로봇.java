@@ -1,61 +1,60 @@
 import java.util.*;
 
 class Solution {
-    static final int[] dx = {-1, 1, 0, 0};
-    static final int[] dy = {0, 0, -1, 1};
-    
-    static int n, m;
-    static char[][] map;
-    static boolean[][] visited;
-    
+    int[] dx = new int[]{-1, 1, 0, 0};
+    int[] dy = new int[]{0, 0, -1, 1};
+    static int[][] visited;
     public int solution(String[] board) {
-        n = board.length;
-        m = board[0].length();
-        map = new char[n][m];
-        visited = new boolean[n][m];
+        int answer = -1;
 
-        int sx = -1, sy = -1, gx = -1, gy = -1;
-        for (int i = 0; i < n; i++) {
-            map[i] = board[i].toCharArray();
-            for (int j = 0; j < m; j++) {
-                if (map[i][j] == 'R') { sx = i; sy = j; }
-                if (map[i][j] == 'G') { gx = i; gy = j; }
-            }
-        }
-        Queue<int[]> q = new ArrayDeque<>();
-        q.offer(new int[]{sx, sy, 0}); 
-        visited[sx][sy] = true;    
-        while(!q.isEmpty()){
-            int[] current = q.poll();
-            int cx = current[0];
-            int cy = current[1];
-            int count = current[2];
-            
-            if(cx == gx && cy == gy){
-                return count;
-            }
-            
-            for(int i=0; i<4; i++){
-                int nx = cx;
-                int ny = cy;
-                while(true){
-                    int nextX = nx + dx[i];
-                    int nextY = ny + dy[i];
-                    if (nextX < 0 || nextX >= n || nextY < 0 || nextY >= m || map[nextX][nextY] == 'D') {
-                        break;
-                    }
-                    nx = nextX;
-                    ny = nextY;
-                }
-                if (!visited[nx][ny]) {
-                    visited[nx][ny] = true; 
-                    q.offer(new int[]{nx, ny, count + 1});
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length(); j++) {
+                if (board[i].charAt(j) == 'R') {
+                    answer = bfs(board, i, j);
                 }
             }
-            
         }
-    
-    
-    return -1;
+
+        return answer;
+    }
+
+    public int bfs(String[] board, int x, int y) {
+        int n = board.length;
+        int m = board[0].length();
+
+        Queue<int[]> queue = new LinkedList<>();
+        queue.add(new int[]{x, y});
+
+        visited = new int[n][m];
+        visited[x][y] = 1;
+
+        while (!queue.isEmpty()) {
+            int[] now = queue.poll();
+            x = now[0];
+            y = now[1];
+
+            for (int i = 0; i < 4; i++) {
+                int nx = x;
+                int ny = y;
+
+                while (nx >= 0 && nx < n && ny >= 0 && ny < m && board[nx].charAt(ny) != 'D') {
+                    nx += dx[i];
+                    ny += dy[i];
+                }
+                
+                nx -= dx[i];
+                ny -= dy[i];
+                
+                if (board[nx].charAt(ny) == 'G') {
+                    return visited[x][y];
+                }
+                
+                if (visited[nx][ny] == 0) {
+                    queue.add(new int[]{nx, ny});
+                    visited[nx][ny] = visited[x][y] + 1;
+                }
+            }
+        }
+        return -1;
     }
 }
