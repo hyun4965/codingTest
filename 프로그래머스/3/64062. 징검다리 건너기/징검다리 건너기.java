@@ -1,33 +1,32 @@
 class Solution {
     public int solution(int[] stones, int k) {
-        int answer =0;
-        int left = 1;
-        int right = 200000000; 
+        int answer = 0;
+        int min = 1;
+        int max = 200000000; 
 
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-
+        while (min <= max) {
+            int mid = (min + max) / 2;
             if (canCross(stones, k, mid)) {
-                answer = mid; 
-                left = mid + 1; 
+                answer = mid;     
+                min = mid + 1;    
             } else {
-                right = mid - 1;
+                max = mid - 1;    
             }
         }
         return answer;
     }
 
-    private boolean canCross(int[] stones, int k, int friends) {
-        int zeros = 0; 
+    public boolean canCross(int[] stones, int k, int friends) {
+        int skip = 0; 
 
         for (int stone : stones) {
-            if (stone - friends < 0) {
-                zeros++;
+            if (stone < friends) {
+                skip++;
             } else {
-                zeros = 0;
+                skip = 0;
             }
 
-            if (zeros >= k) {
+            if (skip >= k) {
                 return false;
             }
         }
