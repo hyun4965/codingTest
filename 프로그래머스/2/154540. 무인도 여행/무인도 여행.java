@@ -1,62 +1,70 @@
 import java.util.*;
 
 class Solution {
-    static int[] dx = {0, 0, 1, -1};
-    static int[] dy = {1, -1, 0, 0};
+    static int[] dx = {-1, 1, 0, 0};
+    static int[] dy = {0, 0, -1, 1};
     
-    static boolean[][] visited;
-    static int rows, cols;
+    boolean[][] visited;
+    int rows, cols;
 
     public int[] solution(String[] maps) {
         rows = maps.length;
         cols = maps[0].length();
         visited = new boolean[rows][cols];
         
-        List<Integer> list = new ArrayList<>();
+        List<Integer> resultList = new ArrayList<>();
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                if (maps[i].charAt(j) != 'X' && !visited[i][j]) {
-                    int stay = bfs(i, j, maps);
-                    list.add(stay);
+                char c = maps[i].charAt(j);
+                
+                if (c != 'X' && !visited[i][j]) {
+                    int sum = bfs(i, j, maps);
+                    resultList.add(sum);
                 }
             }
         }
 
-        if (list.isEmpty()) {
+        if (resultList.isEmpty()) {
             return new int[]{-1};
         }
-        
-        Collections.sort(list);
-        
-        return list.stream().mapToInt(i -> i).toArray();
+
+        Collections.sort(resultList);
+
+        int[] answer = new int[resultList.size()];
+        for (int i = 0; i < resultList.size(); i++) {
+            answer[i] = resultList.get(i);
+        }
+        return answer;
     }
 
-    public int bfs(int x, int y, String[] maps) {
+    public int bfs(int startRow, int startCol, String[] maps) {
         Queue<int[]> queue = new LinkedList<>();
-        queue.add(new int[]{x, y});
-        visited[x][y] = true;
-        
-        int currentStay = Character.getNumericValue(maps[x].charAt(y));
+        queue.add(new int[]{startRow, startCol});
+        visited[startRow][startCol] = true;
+
+        int sum = 0;
 
         while (!queue.isEmpty()) {
             int[] current = queue.poll();
-            int cx = current[0];
-            int cy = current[1];
+            int row = current[0];
+            int col = current[1];
+
+            sum += maps[row].charAt(col) - '0';
 
             for (int i = 0; i < 4; i++) {
-                int nx = cx + dx[i];
-                int ny = cy + dy[i];
+                int nr = row + dx[i];
+                int nc = col + dy[i];
 
-                if (nx >= 0 && nx < rows && ny >= 0 && ny < cols) {
-                    if (maps[nx].charAt(ny) != 'X' && !visited[nx][ny]) {
-                        visited[nx][ny] = true; 
-                        currentStay += Character.getNumericValue(maps[nx].charAt(ny)); 
-                        queue.add(new int[]{nx, ny}); 
+                if (nr >= 0 && nc >= 0 && nr < rows && nc < cols) {
+                    if (!visited[nr][nc] && maps[nr].charAt(nc) != 'X') {
+                        visited[nr][nc] = true;
+                        queue.add(new int[]{nr, nc});
                     }
                 }
             }
         }
-        return currentStay;
+        return sum;
     }
+
 }

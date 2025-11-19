@@ -1,49 +1,46 @@
-import java.time.Duration;
-import java.time.LocalTime;
-
 class Solution {
     public String solution(String m, String[] musicinfos) {
         String answer = "(None)";
-        int maxPlayTime = -1;
+        int max = -1; 
 
-        m = normalize(m);
+        m = changeMelody(m);
 
-        for (String info : musicinfos) {
-            String[] parts = info.split(",");
-            String startTimeStr = parts[0];
-            String endTimeStr = parts[1];
-            String title = parts[2];
-            String sheet = parts[3];
+        for (String musicinfo : musicinfos) {
+            String[] info = musicinfo.split(",");
+            
+            String[] start = info[0].split(":");
+            String[] end = info[1].split(":");
+            
+            int startMin = Integer.parseInt(start[0]) * 60 + Integer.parseInt(start[1]);
+            int endMin = Integer.parseInt(end[0]) * 60 + Integer.parseInt(end[1]);
+            int playTime = endMin - startMin;
 
-            LocalTime start = LocalTime.parse(startTimeStr);
-            LocalTime end = LocalTime.parse(endTimeStr);
-            int playTime = (int) Duration.between(start, end).toMinutes();
-
-            sheet = normalize(sheet);
-            int sheetLength = sheet.length();
-
+            String sheet = changeMelody(info[3]);
+            
             StringBuilder playedMelody = new StringBuilder();
             for (int i = 0; i < playTime; i++) {
-                playedMelody.append(sheet.charAt(i % sheetLength));
+                playedMelody.append(sheet.charAt(i % sheet.length()));
             }
 
+
             if (playedMelody.toString().contains(m)) {
-                if (playTime > maxPlayTime) {
-                    maxPlayTime = playTime;
-                    answer = title;
+                if (playTime > max) {
+                    answer = info[2];
+                    max = playTime;
                 }
             }
         }
+
         return answer;
     }
 
-    private String normalize(String melody) {
-        return melody.replace("C#", "H")
-                     .replace("D#", "I")
-                     .replace("F#", "J")
-                     .replace("G#", "K")
-                     .replace("A#", "L")
-                     .replace("E#", "F") 
-                     .replace("B#", "C");
+    private String changeMelody(String melody) {
+        return melody
+            .replace("C#", "c")
+            .replace("D#", "d")
+            .replace("F#", "f")
+            .replace("G#", "g")
+            .replace("A#", "a")
+            .replace("B#", "b");
     }
 }

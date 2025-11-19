@@ -1,63 +1,47 @@
 import java.util.*;
 
 class Solution {
-    public class Edge implements Comparable<Edge> {
-        int to;
-        int cost;
-
-        public Edge(int to, int cost) {
-            this.to = to;
-            this.cost = cost;
-        }
-
-        @Override
-        public int compareTo(Edge other) {
-            return Integer.compare(this.cost, other.cost);
-        }
-    }
+    private int[] parent;
 
     public int solution(int n, int[][] costs) {
-        int totalCost = 0; 
+        int answer = 0;
         
-        List<List<Edge>> graph = new ArrayList<>();
+        Arrays.sort(costs, (a, b) -> a[2] - b[2]);
+        
+        parent = new int[n];
         for (int i = 0; i < n; i++) {
-            graph.add(new ArrayList<>());
+            parent[i] = i;
         }
-
+        
         for (int[] edge : costs) {
             int from = edge[0];
             int to = edge[1];
             int cost = edge[2];
-            graph.get(from).add(new Edge(to, cost));
-            graph.get(to).add(new Edge(from, cost));
-        }
-
-        PriorityQueue<Edge> pq = new PriorityQueue<>();
-        boolean[] visited = new boolean[n]; 
-
-        visited[0] = true;
-        pq.addAll(graph.get(0));
-
-        int connectedCount = 1; 
-
-        while (connectedCount < n) {
-            if (pq.isEmpty()) {
-                break;
+            
+            if (find(from) != find(to)) {
+                union(from, to);
+                answer += cost;
             }
-
-            Edge currentEdge = pq.poll();
-
-            if (visited[currentEdge.to]) {
-                continue;
-            }
-
-            visited[currentEdge.to] = true;
-            totalCost += currentEdge.cost; 
-            connectedCount++; 
-
-            pq.addAll(graph.get(currentEdge.to));
         }
-
-        return totalCost;
+        
+        return answer;
+    }
+    
+    private int find(int node) {
+        if (parent[node] == node) {
+            return node;
+        }
+        return parent[node] = find(parent[node]);
+    }
+    
+    private void union(int node1, int node2) {
+        int root1 = find(node1);
+        int root2 = find(node2);
+        
+        if (root1 < root2) {
+            parent[root2] = root1;
+        } else {
+            parent[root1] = root2;
+        }
     }
 }
