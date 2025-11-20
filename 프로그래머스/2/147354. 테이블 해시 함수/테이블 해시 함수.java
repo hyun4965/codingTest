@@ -1,27 +1,27 @@
-import java.util.Arrays;
+import java.util.*;
 
 class Solution {
     public int solution(int[][] data, int col, int row_begin, int row_end) {
-        int colIndex = col - 1;
-
+        int answer = 0;
+        final int colnum = col - 1;
         Arrays.sort(data, (a, b) -> {
-            if (a[colIndex] != b[colIndex]) {
-                return Integer.compare(a[colIndex], b[colIndex]);
-            } else {
-                return Integer.compare(b[0], a[0]);
+            if (a[colnum] != b[colnum]) {
+                return a[colnum] - b[colnum];
             }
+            return b[0] - a[0];
         });
 
-        int answer = 0;
-
-        for (int i = row_begin - 1; i <= row_end - 1; i++) {
-            int current_S = 0;
-            for (int value : data[i]) {
-                current_S += value % (i + 1);
+        for(int i=row_begin-1; i<= row_end-1; i++){
+            int s = 0;
+            int rowNum = i+1;
+            for(int j=0; j<data[i].length; j++){
+                s += data[i][j] % rowNum;
             }
-            answer ^= current_S;
+            answer ^=s;
+            
         }
-
+        
+        
         return answer;
     }
 }
