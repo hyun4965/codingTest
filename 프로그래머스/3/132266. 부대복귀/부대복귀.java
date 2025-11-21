@@ -3,41 +3,42 @@ import java.util.*;
 class Solution {
     public int[] solution(int n, int[][] roads, int[] sources, int destination) {
         
-        int[] answer = new int[sources.length];
+        List<List<Integer>> graph = new ArrayList<>();
         
-        List<Integer>[] graph = new ArrayList[n+1];
-        for(int i=0; i<=n;i++){
-            graph[i] = new ArrayList<>();
+        for(int i=0; i <= n; i++){ 
+            graph.add(new ArrayList<>());
         }
         
-        for(int[] road : roads){
-            graph[road[0]].add(road[1]);
-            graph[road[1]].add(road[0]);
+        for(int i=0; i<roads.length; i++){
+            int from = roads[i][0];
+            int to = roads[i][1];
+            graph.get(from).add(to);
+            graph.get(to).add(from);
         }
         
-        int[] distances = new int[n + 1];
-        Arrays.fill(distances, -1);
-        
-        Queue<Integer> queue = new LinkedList<>();
-        queue.offer(destination);
-        distances[destination] = 0;
-        
-        while(!queue.isEmpty()){
-            int now = queue.poll();
-            
-            for(int next : graph[now]){
-                if(distances[next] == -1){
-                    distances[next] = distances[now] + 1;
-                    queue.offer(next);
+        int[] dist = new int[n + 1];
+        Arrays.fill(dist, -1);
+
+        Queue<Integer> q = new LinkedList<>();
+        q.add(destination);
+        dist[destination] = 0;
+
+        while (!q.isEmpty()) {
+            int cur = q.poll();
+
+            for (int next : graph.get(cur)) {
+                if (dist[next] == -1) {
+                    dist[next] = dist[cur] + 1; 
+                    q.add(next);
                 }
             }
         }
-        
-        
-        
+
+        int[] answer = new int[sources.length];
         for (int i = 0; i < sources.length; i++) {
-            answer[i] = distances[sources[i]];
+            answer[i] = dist[sources[i]];
         }
+
         return answer;
     }
 }
