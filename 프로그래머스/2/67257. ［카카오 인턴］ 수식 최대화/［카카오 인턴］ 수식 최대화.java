@@ -1,64 +1,49 @@
 import java.util.*;
-
+ 
 class Solution {
-    char[][] priorities = {
-        {'+', '-', '*'}, {'+', '*', '-'},
-        {'-', '+', '*'}, {'-', '*', '+'},
-        {'*', '+', '-'}, {'*', '-', '+'}
-    };
-
-    public long solution(String expression) {
-        long answer = 0;
-        
-        List<Long> numbers = new ArrayList<>();
-        List<Character> operators = new ArrayList<>();
-        
-        String numStr = "";
-        for (char c : expression.toCharArray()) {
-            if (Character.isDigit(c)) {
-                numStr += c;
-            } else {
-                numbers.add(Long.parseLong(numStr));
-                numStr = "";
-                operators.add(c);
+    public static long solution(String expression) {
+        long answer = Long.MIN_VALUE;
+        String op[][] = { { "+", "-", "*" }, { "+", "*", "-" }, { "-", "*", "+" }, 
+                         { "-", "+", "*" }, { "*", "-", "+" }, { "*", "+", "-" } };
+ 
+        List<String> list = new ArrayList<String>();
+        int start = 0;
+        for (int i = 0; i < expression.length(); i++) {
+            if (expression.charAt(i) == '-' || expression.charAt(i) == '+' || expression.charAt(i) == '*') {
+                list.add(expression.substring(start, i)); 
+                list.add(expression.charAt(i) + ""); 
+                start = i + 1;
             }
         }
-        numbers.add(Long.parseLong(numStr));
-
-        for (char[] priority : priorities) {
-            List<Long> currentNumbers = new ArrayList<>(numbers);
-            List<Character> currentOperators = new ArrayList<>(operators);
-            
-            for (char op : priority) {
-                for (int i = 0; i < currentOperators.size(); i++) {
-                    if (currentOperators.get(i) == op) {
-                        long num1 = currentNumbers.get(i);
-                        long num2 = currentNumbers.get(i + 1);
-                        long result = calculate(num1, num2, op);
-                        
-                        currentNumbers.remove(i + 1);
-                        currentNumbers.set(i, result);
-                        currentOperators.remove(i);
-                        
-                        i--; 
+        list.add(expression.substring(start)); 
+ 
+        for (int i = 0; i < op.length; i++) {
+            List<String> sub_list = new ArrayList<String>(list);
+            for (int k = 0; k < 3; k++) {
+                for (int j = 0; j < sub_list.size(); j++) {
+                    if (op[i][k].equals(sub_list.get(j))) {
+                        sub_list.set(j - 1, calc(sub_list.get(j - 1), sub_list.get(j), sub_list.get(j + 1)));
+                        sub_list.remove(j);
+                        sub_list.remove(j);
+                        j--;
                     }
                 }
             }
-            
-            long finalResult = Math.abs(currentNumbers.get(0));
-            answer = Math.max(answer, finalResult);
+            answer = Math.max(answer, Math.abs(Long.parseLong(sub_list.get(0))));
         }
-        
+ 
         return answer;
     }
-
-    private long calculate(long num1, long num2, char op) {
-        if (op == '+') {
-            return num1 + num2;
-        } else if (op == '-') {
-            return num1 - num2;
-        } else { // op == '*'
-            return num1 * num2;
-        }
+ 
+    private static String calc(String num1, String op, String num2) {
+        long n1 = Long.parseLong(num1);
+        long n2 = Long.parseLong(num2);
+ 
+        if (op.equals("+"))
+            return n1 + n2 + "";
+        else if (op.equals("-"))
+            return n1 - n2 + "";
+ 
+        return n1 * n2 + "";
     }
 }
