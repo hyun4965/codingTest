@@ -1,57 +1,44 @@
-import java.util.*;
-
 class Solution {
-    private boolean isCorrect(String p) {
-        Stack<Character> stack = new Stack<>();
-        for (char c : p.toCharArray()) {
-            if (c == '(') {
-                stack.push(c);
-            } else {
-                if (stack.isEmpty()) {
-                    return false;
-                }
-                stack.pop();
-            }
-        }
-        return stack.isEmpty();
-    }
-
-    private String convert(String w) {
-        if (w.isEmpty()) {
+    public String solution(String p) {
+        if (p.isEmpty()) {
             return "";
         }
 
-        int openCount = 0;
-        int closeCount = 0;
-        int splitIndex = 0;
-        for (int i = 0; i < w.length(); i++) {
-            if (w.charAt(i) == '(') {
-                openCount++;
+        String u = "";
+        String v = "";
+        int left = 0;
+        int right = 0;
+
+        for (int i = 0; i < p.length(); i++) {
+            if (p.charAt(i) == '(') {
+                left++;
             } else {
-                closeCount++;
+                right++;
             }
-            if (openCount == closeCount) {
-                splitIndex = i + 1;
+            if (left == right) {
+                u = p.substring(0, i + 1);
+                v = p.substring(i + 1);
                 break;
             }
         }
-        String u = w.substring(0, splitIndex);
-        String v = w.substring(splitIndex);
 
         if (isCorrect(u)) {
-            return u + convert(v);
+            return u + solution(v); 
         } else {
             StringBuilder sb = new StringBuilder();
-            sb.append('(');
-            sb.append(convert(v));
-            sb.append(')');
             
-            String middleU = u.substring(1, u.length() - 1);
-            for (char c : middleU.toCharArray()) {
-                if (c == '(') {
-                    sb.append(')');
+            sb.append("(");
+            
+            sb.append(solution(v));
+            
+            sb.append(")");
+
+            String uSub = u.substring(1, u.length() - 1);
+            for (int i = 0; i < uSub.length(); i++) {
+                if (uSub.charAt(i) == '(') {
+                    sb.append(")");
                 } else {
-                    sb.append('(');
+                    sb.append("(");
                 }
             }
             
@@ -59,7 +46,16 @@ class Solution {
         }
     }
 
-    public String solution(String p) {
-        return convert(p);
+    private boolean isCorrect(String s) {
+        int count = 0;
+        for (char c : s.toCharArray()) {
+            if (c == '(') {
+                count++;
+            } else {
+                count--;
+            }
+            if (count < 0) return false;
+        }
+        return count == 0; 
     }
 }
