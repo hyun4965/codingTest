@@ -1,20 +1,23 @@
 class Solution {
     public long solution(int[] sequence) {
-
-        long answer = Long.MIN_VALUE;
-        long dp1 = 0;
-        long dp2 = 0;
+        long answer = 0;
+        
+        long sum1 = 0;
+        long sum2 = 0;
         
         int pulse = 1;
+    
+        answer = Long.MIN_VALUE; 
 
         for (int num : sequence) {
-            long val1 = num * pulse;
-            long val2 = num * -pulse;
-
-            dp1 = Math.max(val1, dp1 + val1);
-            dp2 = Math.max(val2, dp2 + val2);
-
-            answer = Math.max(answer, Math.max(dp1, dp2));
+            long val1 = num * pulse; 
+            long val2 = num * (-pulse);   
+            
+            sum1 = Math.max(sum1 + val1, val1);
+            sum2 = Math.max(sum2 + val2, val2);
+            
+            long maxCurrent = Math.max(sum1, sum2);
+            answer = Math.max(answer, maxCurrent);
             
             pulse *= -1;
         }

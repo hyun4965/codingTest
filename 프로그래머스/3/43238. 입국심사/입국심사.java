@@ -2,29 +2,29 @@ import java.util.Arrays;
 
 class Solution {
     public long solution(int n, int[] times) {
-        Arrays.sort(times);
-
-        long left = 1; // 최소 시간
-        long right = (long) n * times[times.length - 1]; 
+        long answer = 0;
         
-        long answer = right; 
-
+        Arrays.sort(times);
+        
+        long left = 1;
+        long right = (long) times[times.length - 1] * n;
+        
         while (left <= right) {
-            long mid = left + (right - left) / 2;
-            long count = 0; 
-
+            long mid = (left + right) / 2;
+            long count = 0; //n과 비교군 
+            
             for (int time : times) {
-                count += mid / time;
+                count += mid / time; //몇명인지 체크
             }
-
+            
             if (count >= n) {
-                answer = mid;
+                answer = mid; 
                 right = mid - 1;
-            } else {
+            }  else {
                 left = mid + 1;
             }
         }
-
+        
         return answer;
     }
 }
