@@ -1,67 +1,57 @@
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Queue;
 
 class Solution {
-    
-    private final int[] dr = {-1, 1, 0, 0};
-    private final int[] dc = {0, 0, -1, 1};
+    static int dr[] = { -1, 1, 0, 0 };
+    static int dc[] = { 0, 0, -1, 1 };
 
     public int[] solution(String[][] places) {
-        int[] answer = new int[5];
-        for (int i = 0; i < 5; i++) {
-            answer[i] = isRoomSafe(places[i]);
+        int[] answer = new int[places.length];
+
+        for (int i = 0; i < places.length; i++) {
+            String[] p = places[i];
+            boolean isOk = true;
+            
+            for (int r = 0; r < 5 && isOk; r++) {
+                for (int c = 0; c < 5 && isOk; c++) {
+                    if (p[r].charAt(c) == 'P') {
+                        if (!bfs(r, c, p)) {
+                            isOk = false;
+                        }
+                    }
+                }
+            }
+            answer[i] = isOk ? 1 : 0;
         }
         return answer;
     }
 
-    private int isRoomSafe(String[] room) {
-        for (int r = 0; r < 5; r++) {
-            for (int c = 0; c < 5; c++) {
-                if (room[r].charAt(c) == 'P') {
-                    if (!isPersonSafe(r, c, room)) {
-                        return 0;
-                    }
-                }
-            }
-        }
-        return 1; 
-    }
-
-    private boolean isPersonSafe(int startR, int startC, String[] room) {
+    private static boolean bfs(int r, int c, String[] p) {
         Queue<int[]> queue = new LinkedList<>();
-        queue.offer(new int[]{startR, startC, 0});
-        
-        boolean[][] visited = new boolean[5][5];
-        visited[startR][startC] = true;
+        queue.offer(new int[] { r, c });
 
         while (!queue.isEmpty()) {
-            int[] current = queue.poll();
-            int r = current[0];
-            int c = current[1];
-            int dist = current[2];
-
-            if (dist >= 2) {
-                continue;
-            }
+            int[] cur = queue.poll();
+            int cx = cur[0];
+            int cy = cur[1];
 
             for (int i = 0; i < 4; i++) {
-                int nr = r + dr[i];
-                int nc = c + dc[i];
+                int nr = cx + dr[i];
+                int nc = cy + dc[i];
 
-                if (nr < 0 || nr >= 5 || nc < 0 || nc >= 5 || visited[nr][nc]) {
+                if (nr < 0 || nc < 0 || nr >= 5 || nc >= 5 || (nr == r && nc == c)) {
                     continue;
                 }
 
-                visited[nr][nc] = true;
-                char cell = room[nr].charAt(nc);
+                int d = Math.abs(nr - r) + Math.abs(nc - c);
 
-                if (cell == 'P') {
-                    return false; 
-                } else if (cell == 'O') {
-                    queue.offer(new int[]{nr, nc, dist + 1});
+                if (p[nr].charAt(nc) == 'P' && d <= 2) {
+                    return false;
+                } else if (p[nr].charAt(nc) == 'O' && d < 2) {
+                    queue.offer(new int[] { nr, nc });
                 }
             }
         }
-
-        return true; 
+        return true;
     }
 }
