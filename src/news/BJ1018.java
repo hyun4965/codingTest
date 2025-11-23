@@ -1,0 +1,54 @@
+package news;
+
+import java.util.Scanner;
+
+public class BJ1018 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+
+        char[][] board = new char[n][m];
+
+        for (int i = 0; i < n; i++) {
+            String str = sc.next();
+            for (int j = 0; j < m; j++) {
+                board[i][j] = str.charAt(j);
+            }
+        }
+
+        int min = 64;
+
+        for (int i = 0; i <= n - 8; i++) {
+            for (int j = 0; j <= m - 8; j++) {
+                int count = getSolution(i, j, board);
+                if (min > count) {
+                    min = count;
+                }
+            }
+        }
+
+        System.out.println(min);
+    }
+
+    public static int getSolution(int startRow, int startCol, char[][] board) {
+        int count = 0;
+
+        for (int i = startRow; i < startRow + 8; i++) {
+            for (int j = startCol; j < startCol + 8; j++) {
+
+                char expectedColor;
+                if ((i + j) % 2 == 0) {
+                    expectedColor = 'W';
+                } else {
+                    expectedColor = 'B';
+                }
+
+                if (board[i][j] != expectedColor) {
+                    count++;
+                }
+            }
+        }
+        return Math.min(count, 64 - count);
+    }
+}
