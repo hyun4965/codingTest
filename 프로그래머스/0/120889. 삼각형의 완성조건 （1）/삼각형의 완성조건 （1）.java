@@ -1,13 +1,14 @@
-import java.util.*;
-
 class Solution {
     public int solution(int[] sides) {
-        Arrays.sort(sides);
-        int count = sides[0] + sides[1];
-        if(sides[2] >= count){
-            return 2;
-        }else{
-            return 1;
+        
+        int max = 0;
+        int sum = 0;
+
+        for (int s : sides) {
+            max = Math.max(max, s);
+            sum += s;
         }
+
+        return (sum - max > max) ? 1 : 2;
     }
 }
