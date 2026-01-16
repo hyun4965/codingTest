@@ -1,14 +1,20 @@
 class Solution {
     public String solution(String my_string) {
-        StringBuilder sb = new StringBuilder();
-        String vowels = "aeiou"; 
+        StringBuilder sb = new StringBuilder(my_string.length());
 
-        for (char ch : my_string.toCharArray()) {
-            if (vowels.indexOf(ch) == -1) { 
-                sb.append(ch);
+        for (int i = 0; i < my_string.length(); i++) {
+            char c = my_string.charAt(i);
+            switch (c) {
+                case 'a':
+                case 'e':
+                case 'i':
+                case 'o':
+                case 'u':
+                    break;
+                default:
+                    sb.append(c);
             }
         }
-
         return sb.toString();
     }
 }
