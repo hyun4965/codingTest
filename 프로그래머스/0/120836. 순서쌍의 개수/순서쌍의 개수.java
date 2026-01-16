@@ -1,18 +1,13 @@
 class Solution {
     public int solution(int n) {
         int answer = 0;
-
-        for (int d = 1; d * d <= n; d++) {
-            if (n % d == 0) {         
-                int pair = n / d;    
-
-                if (d == pair) {      
-                    answer += 1;
-                } else {     
-                    answer += 2;
-                }
+        
+        for(int i=1; i<=n; i++){
+            if(n%i == 0 ){
+                answer++;
             }
         }
+        
         return answer;
     }
 }

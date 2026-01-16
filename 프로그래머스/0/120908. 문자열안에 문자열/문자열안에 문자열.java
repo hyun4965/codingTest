@@ -1,12 +1,5 @@
 class Solution {
     public int solution(String str1, String str2) {
-
-        if (str1.contains(str2)) {
-            return 1;
-        } else {
-            return 2;
-        }
-
-
+        return str1.toLowerCase().contains(str2.toLowerCase()) ? 1 : 2;
     }
 }
