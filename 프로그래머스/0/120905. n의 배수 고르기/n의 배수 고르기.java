@@ -1,9 +1,20 @@
-import java.util.*;
-
 class Solution {
     public int[] solution(int n, int[] numlist) {
-        return Arrays.stream(numlist)
-                     .filter(num -> num % n == 0)
-                     .toArray();
+        int cnt = 0;
+        for (int x : numlist) {
+            if (x % n == 0) {
+                cnt++;
+            }
+        }
+
+        int[] answer = new int[cnt];
+        int idx = 0;
+        for (int x : numlist) {
+            if (x % n == 0) {
+                answer[idx++] = x;
+            }
+        }
+
+        return answer;
     }
 }
