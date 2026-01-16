@@ -1,16 +1,16 @@
 class Solution {
     public String solution(String my_string, String letter) {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder answer = new StringBuilder();
+        char l = letter.charAt(0);
         
-        for (int i = 0; i < my_string.length(); i++) {
+        for(int i=0; i<my_string.length(); i++){
             char c = my_string.charAt(i);
-            if (c == letter.charAt(0)) {
+            if(c==l){
                 continue;
-            } else {
-                sb.append(c);
             }
+            answer.append(c);
         }
         
-        return sb.toString();
+        return answer.toString();
     }
 }
