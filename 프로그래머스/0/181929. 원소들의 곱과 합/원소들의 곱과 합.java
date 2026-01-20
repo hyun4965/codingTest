@@ -1,17 +1,15 @@
 class Solution {
     public int solution(int[] num_list) {
+        int answer = 0;
+        int mul = 1;
         int sum = 0;
-        int product = 1;
-
-        for (int num : num_list) {
-            sum += num;
-            product *= num;
+        
+        for(int i=0; i<num_list.length; i++){
+            mul *= num_list[i];
+            sum += num_list[i];
         }
-
-        if (product < sum * sum) {
-            return 1;
-        } else {
-            return 0;
-        }
+        sum *=sum;
+        
+        return mul<sum ? 1:0;
     }
 }
