@@ -3,13 +3,15 @@ import java.util.Scanner;
 public class Solution {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
         
-        if(n%2==0){
-            System.out.print(n + " is even");
+        int n = sc.nextInt();
+        String str = "";
+        if(n%2 ==0){
+            str= "even";
+            System.out.print(n + " is " + str);
         }else{
-            System.out.print(n + " is odd");
-
+            str= "odd";
+            System.out.print(n + " is " + str);
         }
     }
 }

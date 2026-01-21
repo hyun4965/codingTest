@@ -2,31 +2,31 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
-        int n = progresses.length;
-        int[] days = new int[n];
-
-        for (int i = 0; i < n; i++) {
+        List<Integer> list = new ArrayList<>();
+        Deque<Integer> queue = new ArrayDeque<>(); 
+        
+        for (int i = 0; i < progresses.length; i++) {
             int remain = 100 - progresses[i];
-            days[i] = (remain + speeds[i] - 1) / speeds[i];
+            int days = (remain + speeds[i] - 1) / speeds[i]; 
+            queue.addLast(days);
         }
 
-        List<Integer> batches = new ArrayList<>();
-        int releaseDay = days[0];
-        int cnt = 1;
+        while (!queue.isEmpty()) {
+            int num = queue.pollFirst();
+            int count = 1;
 
-        for (int i = 1; i < n; i++) {
-            if (days[i] <= releaseDay) {
-                cnt++;
-            } else {
-                batches.add(cnt);
-                releaseDay = days[i];
-                cnt = 1;
+            while (!queue.isEmpty() && queue.peekFirst() <= num) {
+                queue.pollFirst();
+                count++;
             }
-        }
-        batches.add(cnt); 
 
-        int[] answer = new int[batches.size()];
-        for (int i = 0; i < batches.size(); i++) answer[i] = batches.get(i);
+            list.add(count);
+        }
+
+        int[] answer = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            answer[i] = list.get(i);
+        }
         return answer;
     }
 }
