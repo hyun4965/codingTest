@@ -1,8 +1,8 @@
 class Solution {
     public int solution(int a, int b) {
-        int ab = Integer.parseInt(String.valueOf(a) + b);
-        int ba = Integer.parseInt(String.valueOf(b) + a);
-        
-        return Math.max(ab, ba);
+        String ab = String.valueOf(a) + b;
+        String ba = String.valueOf(b) + a;
+
+        return ab.compareTo(ba) >= 0 ? Integer.parseInt(ab) : Integer.parseInt(ba);
     }
 }
