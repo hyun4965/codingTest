@@ -1,15 +1,17 @@
 class Solution {
     public int[] solution(int[] array) {
-        int max = array[0];  
-        int index = 0; 
+        int[] answer = new int[2];
         
-        for (int i = 1; i < array.length; i++) {
-            if (array[i] > max) {
-                max = array[i];
-                index = i;
+        int index = 0;
+        int max = array[0];
+        for(int i=0; i<array.length; i++){
+            if(max <= array[i]){
+                answer[0] = array[i];
+                max = answer[0];
+                answer[1] = i;
             }
         }
-        
-        return new int[] { max, index };
+
+        return answer;
     }
 }
