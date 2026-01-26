@@ -2,10 +2,9 @@ class Solution {
     public int solution(int a, int b, boolean flag) {
         int answer = 0;
         if(flag){
-            answer = a+b;
+            return a+b;
         }else{
-            answer = a-b;
+            return a-b;
         }
-        return answer;
     }
 }
