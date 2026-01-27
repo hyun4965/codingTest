@@ -1,13 +1,20 @@
-import java.util.Arrays;
+import java.util.*;
 
 class Solution {
     public int solution(int[] numbers) {
+        int answer = 0;
+        
         Arrays.sort(numbers);
         
-        int n = numbers.length;
-        int prodSmall = numbers[0] * numbers[1];        
-        int prodLarge = numbers[n - 2] * numbers[n - 1];
+        int a = numbers[0] * numbers[1];
+        int b = numbers[numbers.length -1] * numbers[numbers.length-2];
         
-        return Math.max(prodSmall, prodLarge);
+        if(a>b){
+            answer = a;
+        }else{
+            answer = b;
+        }
+        
+        return answer;
     }
 }
