@@ -82,6 +82,7 @@ public class BJ6549 {
                 c = readByte();
             }
             return val * sign;
+
         }
     }
 }
