@@ -1,13 +1,11 @@
 class Solution {
     public int solution(int[] arr, int idx) {
-        int answer = -1;  
-
-        for (int index = idx; index < arr.length; index++) {
-            if (arr[index] == 1) {        
-                answer = index;
-                break;
+        int answer = 0;
+        for(int i=idx; i<arr.length; i++){
+            if(1 == arr[i]){
+                return i;
             }
         }
-        return answer;
+        return -1;
     }
 }
