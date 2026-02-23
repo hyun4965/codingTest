@@ -10,6 +10,7 @@ public class BJ1005 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
         int t = Integer.parseInt(br.readLine());
+        //깃 자동 로그인 확인
 
         while (t-- > 0) {
             StringTokenizer st = new StringTokenizer(br.readLine());
