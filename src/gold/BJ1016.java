@@ -36,3 +36,4 @@ public class BJ1016 {
         System.out.print(count);
     }
 }
+
