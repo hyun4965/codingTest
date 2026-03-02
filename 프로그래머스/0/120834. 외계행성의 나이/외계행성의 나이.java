@@ -1,13 +1,15 @@
 class Solution {
     public String solution(int age) {
         StringBuilder answer = new StringBuilder();
-        String ageStr = String.valueOf(age);
-
-        for (int i = 0; i < ageStr.length(); i++) {
-            int digit = ageStr.charAt(i) - '0'; 
-            answer.append((char) ('a' + digit)); 
+        
+        while(age > 0){
+            int num = age % 10;
+            
+            answer.append((char)('a' + num));
+            
+            age /= 10;
         }
-
-        return answer.toString();
+        
+        return answer.reverse().toString();
     }
 }
