@@ -1,20 +1,28 @@
+import java.util.*;
+
 class Solution {
     public int[] solution(int[] numbers, String direction) {
-        int len = numbers.length;
-        int[] answer = new int[len];
-
-        if (direction.equals("right")) {
-            answer[0] = numbers[len - 1];
-            for (int i = 0; i < len - 1; i++) {
-                answer[i + 1] = numbers[i];
-            }
-        } else if (direction.equals("left")) {
-            for (int i = 0; i < len - 1; i++) {
-                answer[i] = numbers[i + 1];
-            }
-            answer[len - 1] = numbers[0];
+        
+        Deque<Integer> deque = new ArrayDeque<>();
+        
+        for (int num : numbers) {
+            deque.addLast(num);
         }
-
+        
+        if (direction.equals("right")) {
+            int last = deque.removeLast();
+            deque.addFirst(last);
+        } else { 
+            int first = deque.removeFirst();
+            deque.addLast(first);
+        }
+        
+        int[] answer = new int[numbers.length];
+        int idx = 0;
+        for (int num : deque) {
+            answer[idx++] = num;
+        }
+        
         return answer;
     }
 }

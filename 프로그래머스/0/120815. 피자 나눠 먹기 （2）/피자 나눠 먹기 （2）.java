@@ -1,9 +1,15 @@
 class Solution {
     public int solution(int n) {
-        int pizza = 1;
-        while ((6 * pizza) % n != 0) {
-            pizza++;
+        int g = gcd(n, 6);
+        return n / g;
+    }
+
+    private int gcd(int a, int b) {
+        while (b != 0) {
+            int r = a % b;
+            a = b;
+            b = r;
         }
-        return pizza;
+        return a;
     }
 }

@@ -1,17 +1,16 @@
 import java.util.Arrays;
-import java.util.Collections;
 
 class Solution {
     public long solution(long n) {
-        String[] digits = String.valueOf(n).split("");
-
-        Arrays.sort(digits, Collections.reverseOrder());
-
-        StringBuilder sb = new StringBuilder();
-        for (String digit : digits) {
-            sb.append(digit);
-        }
-
+        String str = String.valueOf(n);
+        
+        char[] arr = str.toCharArray();
+        
+        Arrays.sort(arr);
+        
+        StringBuilder sb = new StringBuilder(new String(arr));
+        sb.reverse();
+        
         return Long.parseLong(sb.toString());
     }
 }
