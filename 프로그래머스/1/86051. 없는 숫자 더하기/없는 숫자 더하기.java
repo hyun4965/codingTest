@@ -1,20 +1,16 @@
-import java.util.HashSet;
-import java.util.Set;
-
 class Solution {
     public int solution(int[] numbers) {
-        int answer = 0;
-        Set<Integer> set = new HashSet<>();
-        
-        for (int num : numbers) {
-            set.add(num);
+        boolean[] isVisited = new boolean[10];
+        for(int i=0; i<numbers.length; i++){
+            isVisited[numbers[i]] = true;
         }
-        
-        for (int i = 0; i <= 9; i++) {
-            if (!set.contains(i)) {
-                answer += i;
+        int answer = 0;
+        for(int i=0; i<isVisited.length; i++){
+            if(!isVisited[i]){
+                answer+=i;
             }
         }
+        
         
         return answer;
     }
