@@ -1,12 +1,9 @@
 class Solution {
     public String solution(String myString, String pat) {
-        String answer = "";
-        for (int i = 1; i <= myString.length(); i++) {
-            String sub = myString.substring(0, i);
-            if (sub.endsWith(pat)) {
-                answer = sub;
-            }
+        int last = -1;
+        for (int i = 0; i <= myString.length() - pat.length(); i++) {
+            if (myString.startsWith(pat, i)) last = i;
         }
-        return answer;
+        return myString.substring(0, last + pat.length());
     }
 }
