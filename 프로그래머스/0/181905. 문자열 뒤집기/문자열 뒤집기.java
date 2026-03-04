@@ -1,10 +1,19 @@
 class Solution {
     public String solution(String my_string, int s, int e) {
-        String front = my_string.substring(0, s);
-        String mid = my_string.substring(s, e + 1);
-        String reversedMid = new StringBuilder(mid).reverse().toString();
-        String back = my_string.substring(e + 1);
+        StringBuilder answer = new StringBuilder();
         
-        return front + reversedMid + back;
+        for(int i=0; i<s; i++){
+            char c = my_string.charAt(i);
+            answer.append(c);
+        }
+        for(int i=e; i>=s; i--){
+            char c = my_string.charAt(i);
+            answer.append(c);
+        }
+        for(int i=e+1; i<my_string.length(); i++){
+            char c = my_string.charAt(i);
+            answer.append(c);
+        }
+        return answer.toString();
     }
 }
