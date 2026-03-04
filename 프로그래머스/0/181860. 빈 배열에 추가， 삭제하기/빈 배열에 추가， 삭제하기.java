@@ -2,25 +2,26 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int[] arr, boolean[] flag) {
-        List<Integer> list = new ArrayList<>();
+        ArrayList<Integer> X = new ArrayList<>();
 
         for (int i = 0; i < arr.length; i++) {
             if (flag[i]) {
-                for (int j = 0; j < arr[i] * 2; j++) {
-                    list.add(arr[i]);
+                int times = arr[i] * 2;
+                for (int t = 0; t < times; t++) {
+                    X.add(arr[i]);
                 }
             } else {
-                for (int j = 0; j < arr[i]; j++) {
-                    list.remove(list.size() - 1); 
+                int removeCount = arr[i];
+                for (int t = 0; t < removeCount; t++) {
+                    X.remove(X.size() - 1);
                 }
             }
         }
 
-        int[] answer = new int[list.size()];
-        for (int i = 0; i < list.size(); i++) {
-            answer[i] = list.get(i);
+        int[] answer = new int[X.size()];
+        for (int i = 0; i < X.size(); i++) {
+            answer[i] = X.get(i);
         }
-
         return answer;
     }
 }
