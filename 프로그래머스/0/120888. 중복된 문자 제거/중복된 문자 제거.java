@@ -1,17 +1,17 @@
-import java.util.HashSet;
+import java.util.*;
 
 class Solution {
     public String solution(String my_string) {
         StringBuilder answer = new StringBuilder();
-        HashSet<Character> seen = new HashSet<>();
-
+        Set<Character> set = new HashSet<>();
+        
         for (char c : my_string.toCharArray()) {
-            if (!seen.contains(c)) {
-                seen.add(c);
+            if (!set.contains(c)) {
+                set.add(c);
                 answer.append(c);
             }
         }
-
+        
         return answer.toString();
     }
 }
