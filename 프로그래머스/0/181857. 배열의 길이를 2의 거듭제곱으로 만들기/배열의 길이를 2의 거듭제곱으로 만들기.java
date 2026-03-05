@@ -1,23 +1,18 @@
-import java.util.Arrays;
-
 class Solution {
     public int[] solution(int[] arr) {
-        int length = arr.length;
-        int pow = 1;
+        int len = arr.length;
+        int i=1;
+        while(true){
+            if(len <= i){
+                break;
+            }
+            i*=2;
+        }
         
-        while (pow < length) {
-            pow *= 2;
+        int[] answer = new int[i];
+        for(int j=0; j<arr.length; j++){
+            answer[j] = arr[j];
         }
-
-        if (pow == length) {
-            return arr;
-        }
-
-        int[] answer = new int[pow];
-        for (int i = 0; i < length; i++) {
-            answer[i] = arr[i];
-        }
-
         return answer;
     }
 }
