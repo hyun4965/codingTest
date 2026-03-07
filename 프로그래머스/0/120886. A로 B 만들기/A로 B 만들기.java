@@ -2,16 +2,16 @@ import java.util.Arrays;
 
 class Solution {
     public int solution(String before, String after) {
-        char[] beforeArr = before.toCharArray();
-        char[] afterArr = after.toCharArray();
-
-        Arrays.sort(beforeArr);
-        Arrays.sort(afterArr);
-
-        if (Arrays.equals(beforeArr, afterArr)) {
+        char[] b = before.toCharArray();
+        char[] a = after.toCharArray();
+        
+        Arrays.sort(b);
+        Arrays.sort(a);
+        
+        if(Arrays.equals(b, a)){
             return 1;
-        } else {
-            return 0;
         }
+        
+        return 0;
     }
 }
