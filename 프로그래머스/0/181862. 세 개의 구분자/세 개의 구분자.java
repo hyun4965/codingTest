@@ -2,19 +2,20 @@ import java.util.*;
 
 class Solution {
     public String[] solution(String myStr) {
-        String[] splitArr = myStr.split("[abc]");
 
-        List<String> result = new ArrayList<>();
-        for (String s : splitArr) {
+        String[] split = myStr.split("[abc]");
+        List<String> list = new ArrayList<>();
+
+        for (String s : split) {
             if (!s.isEmpty()) {
-                result.add(s);
+                list.add(s);
             }
         }
 
-        if (result.isEmpty()) {
+        if (list.isEmpty()) {
             return new String[]{"EMPTY"};
         }
 
-        return result.toArray(new String[0]);
+        return list.toArray(new String[0]);
     }
 }
