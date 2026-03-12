@@ -1,20 +1,20 @@
-import java.util.*;
+import java.util.Arrays;
 
 class Solution {
     public String solution(String s) {
-        int[] count = new int[26]; 
+        String answer = "";
 
-        for (char c : s.toCharArray()) {
-            count[c - 'a']++;
-        }
+        for(int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
 
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < 26; i++) {
-            if (count[i] == 1) {
-                result.append((char)(i + 'a'));
+            if(s.indexOf(c) == s.lastIndexOf(c)) {
+                answer += c;
             }
         }
 
-        return result.toString(); 
+        char[] arr = answer.toCharArray();
+        Arrays.sort(arr);
+
+        return new String(arr);
     }
 }
