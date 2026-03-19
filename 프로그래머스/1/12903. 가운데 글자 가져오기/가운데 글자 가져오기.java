@@ -1,12 +1,14 @@
 class Solution {
     public String solution(String s) {
-        int len = s.length();
-        int mid = len / 2;
+        StringBuilder answer = new StringBuilder();
 
-        if (len % 2 == 0) {
-            return s.substring(mid - 1, mid + 1);
+        if (s.length() % 2 == 0) {
+            answer.append(s.charAt((s.length() / 2) - 1));
+            answer.append(s.charAt(s.length() / 2));
         } else {
-            return String.valueOf(s.charAt(mid));
+            answer.append(s.charAt(s.length() / 2));
         }
+
+        return answer.toString();
     }
 }
