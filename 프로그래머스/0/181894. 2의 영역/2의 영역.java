@@ -1,5 +1,3 @@
-import java.util.*;
-
 class Solution {
     public int[] solution(int[] arr) {
         int first = -1;
@@ -18,6 +16,11 @@ class Solution {
             return new int[]{-1};
         }
         
-        return Arrays.copyOfRange(arr, first, last + 1);
+        int[] answer = new int[last - first + 1];
+        for (int i = first; i <= last; i++) {
+            answer[i - first] = arr[i];
+        }
+        
+        return answer;
     }
 }
