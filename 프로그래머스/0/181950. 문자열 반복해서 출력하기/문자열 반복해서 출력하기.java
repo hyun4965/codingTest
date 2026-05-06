@@ -6,11 +6,8 @@ public class Solution {
         String str = sc.next();
         int n = sc.nextInt();
         
-        StringBuilder sb = new StringBuilder();
-        
         for(int i=0; i<n; i++){
-            sb.append(str);
+            System.out.print(str);
         }
-        System.out.print(sb.toString());
     }
 }
