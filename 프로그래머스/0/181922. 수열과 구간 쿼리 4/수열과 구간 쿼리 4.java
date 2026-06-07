@@ -6,11 +6,18 @@ class Solution {
             int k = query[2];
 
             for (int i = s; i <= e; i++) {
-                if (i % k == 0) {
-                    arr[i]++;
+                if (k == 0) {
+                    if (i == 0) {
+                        arr[i]++;
+                    }
+                } else {
+                    if (i % k == 0) {
+                        arr[i]++;
+                    }
                 }
             }
         }
+
         return arr;
     }
 }
