@@ -5,20 +5,23 @@ class Solution {
         }
 
         int min = arr[0];
+
         for (int i = 1; i < arr.length; i++) {
             if (arr[i] < min) {
                 min = arr[i];
             }
         }
 
-        int[] result = new int[arr.length - 1];
+        int[] answer = new int[arr.length - 1];
         int index = 0;
-        for (int num : arr) {
-            if (num != min) {
-                result[index++] = num;
+
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] != min) {
+                answer[index] = arr[i];
+                index++;
             }
         }
 
-        return result;
+        return answer;
     }
 }
