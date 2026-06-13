@@ -1,11 +1,15 @@
 class Solution {
     public String solution(int n) {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder answer = new StringBuilder();
         
-        for (int i = 0; i < n; i++) {
-            sb.append(i % 2 == 0 ? "수" : "박");
+        for(int i=0; i<n; i++){
+            if(i % 2 == 0){
+                answer.append("수");
+            }else{
+                answer.append("박");
+            }
         }
         
-        return sb.toString();
+        return answer.toString();
     }
 }
