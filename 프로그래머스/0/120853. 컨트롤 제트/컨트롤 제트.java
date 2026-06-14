@@ -1,22 +1,20 @@
-import java.util.*;
 class Solution {
     public int solution(String s) {
-        String[] tokens = s.split(" ");
-        int sum = 0;
-        Stack<Integer> stack = new Stack<>();
+        int answer = 0;
+        int before = 0;
 
-        for (String token : tokens) {
-            if (token.equals("Z")) {
-                if (!stack.isEmpty()) {
-                    sum -= stack.pop();
-                }
+        String[] arr = s.split(" ");
+
+        for (String str : arr) {
+            if (str.equals("Z")) {
+                answer -= before;
             } else {
-                int num = Integer.parseInt(token);
-                stack.push(num);
-                sum += num;
+                int num = Integer.parseInt(str);
+                answer += num;
+                before = num;
             }
         }
 
-        return sum;
+        return answer;
     }
 }
