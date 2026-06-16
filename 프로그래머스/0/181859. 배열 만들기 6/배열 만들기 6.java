@@ -1,30 +1,24 @@
-import java.util.*;
+import java.util.Arrays;
 
 class Solution {
     public int[] solution(int[] arr) {
-        Stack<Integer> stk = new Stack<>();
-        int i = 0;
+        int[] stk = new int[arr.length];
+        int top = 0;
 
-        while (i < arr.length) {
-            if (stk.isEmpty()) {
-                stk.push(arr[i]);
-            } else if (stk.peek() == arr[i]) {
-                stk.pop();
+        for (int num : arr) {
+            if (top == 0) {
+                stk[top++] = num;
+            } else if (stk[top - 1] == num) {
+                top--;
             } else {
-                stk.push(arr[i]);
+                stk[top++] = num;
             }
-            i++;
         }
 
-        if (stk.isEmpty()) {
-            return new int[] {-1};
+        if (top == 0) {
+            return new int[]{-1};
         }
 
-        int[] answer = new int[stk.size()];
-        for (int j = stk.size() - 1; j >= 0; j--) {
-            answer[j] = stk.pop(); 
-        }
-
-        return answer;
+        return Arrays.copyOf(stk, top);
     }
 }
