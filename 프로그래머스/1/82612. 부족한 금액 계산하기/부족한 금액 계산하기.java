@@ -1,7 +1,13 @@
 class Solution {
     public long solution(int price, int money, int count) {
-        long totalCost = (long) price * count * (count + 1) / 2;
-        
-        return totalCost > money ? totalCost - money : 0;
+        long total = 0;
+
+        for (int i = 1; i <= count; i++) {
+            total += (long) price * i;
+        }
+
+        long lack = total - money;
+
+        return lack > 0 ? lack : 0;
     }
 }
