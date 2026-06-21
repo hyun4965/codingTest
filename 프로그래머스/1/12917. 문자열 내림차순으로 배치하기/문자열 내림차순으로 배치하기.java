@@ -1,12 +1,17 @@
-import java.util.Arrays;
+import java.util.*;
 
 class Solution {
     public String solution(String s) {
         char[] arr = s.toCharArray();
+
         Arrays.sort(arr);
-        String sortedString = new String(arr);
-        
-        StringBuilder sb = new StringBuilder(sortedString);
-        return sb.reverse().toString();
+
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = arr.length - 1; i >= 0; i--) {
+            sb.append(arr[i]);
+        }
+
+        return sb.toString();
     }
 }
