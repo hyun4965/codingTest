@@ -1,31 +1,29 @@
-import java.util.Arrays;
-
 class Solution {
     public int solution(int[] arr) {
-        int count = 0;
-        int[] prev = Arrays.copyOf(arr, arr.length);
-        int[] next = new int[arr.length];
+        int answer = 0;
 
         while (true) {
+            boolean changed = false;
+
             for (int i = 0; i < arr.length; i++) {
-                int val = prev[i];
-                if (val >= 50 && val % 2 == 0) {
-                    next[i] = val / 2;
-                } else if (val < 50 && val % 2 == 1) {
-                    next[i] = val * 2 + 1;
-                } else {
-                    next[i] = val;
+                int num = arr[i];
+
+                if (num >= 50 && num % 2 == 0) {
+                    arr[i] = num / 2;
+                    changed = true;
+                } else if (num < 50 && num % 2 == 1) {
+                    arr[i] = num * 2 + 1;
+                    changed = true;
                 }
             }
 
-            if (Arrays.equals(prev, next)) {
+            if (!changed) {
                 break;
             }
 
-            prev = Arrays.copyOf(next, next.length);
-            count++;
+            answer++;
         }
 
-        return count;
+        return answer;
     }
 }
