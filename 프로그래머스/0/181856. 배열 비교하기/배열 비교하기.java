@@ -1,5 +1,6 @@
 class Solution {
     public int solution(int[] arr1, int[] arr2) {
+
         if (arr1.length > arr2.length) {
             return 1;
         } else if (arr1.length < arr2.length) {
@@ -12,14 +13,17 @@ class Solution {
         for (int num : arr1) {
             sum1 += num;
         }
+
         for (int num : arr2) {
             sum2 += num;
         }
+
         if (sum1 > sum2) {
             return 1;
         } else if (sum1 < sum2) {
             return -1;
         }
+
         return 0;
     }
 }
