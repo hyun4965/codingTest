@@ -1,15 +1,16 @@
 class Solution {
     public String solution(String my_string, int[][] queries) {
-        char[] arr = my_string.toCharArray(); // 문자열 → 문자 배열
+        char[] arr = my_string.toCharArray();
 
-        for (int[] q : queries) {
-            int s = q[0];
-            int e = q[1];
+        for (int i = 0; i < queries.length; i++) {
+            int s = queries[i][0];
+            int e = queries[i][1];
 
             while (s < e) {
-                char tmp = arr[s];
+                char temp = arr[s];
                 arr[s] = arr[e];
-                arr[e] = tmp;
+                arr[e] = temp;
+
                 s++;
                 e--;
             }
