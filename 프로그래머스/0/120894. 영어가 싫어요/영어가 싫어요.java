@@ -1,14 +1,14 @@
 class Solution {
     public long solution(String numbers) {
-        String[] eng = {
-            "zero","one","two","three","four",
-            "five","six","seven","eight","nine"
+        String[] words = {
+            "zero", "one", "two", "three", "four",
+            "five", "six", "seven", "eight", "nine"
         };
-        
-        for (int i = 0; i < eng.length; i++) {
-            numbers = numbers.replaceAll(eng[i], String.valueOf(i));
+
+        for (int i = 0; i < words.length; i++) {
+            numbers = numbers.replace(words[i], i + "");
         }
-        
+
         return Long.parseLong(numbers);
     }
 }
