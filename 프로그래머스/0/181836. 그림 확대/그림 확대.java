@@ -1,19 +1,27 @@
-import java.lang.StringBuilder;
 class Solution {
     public String[] solution(String[] picture, int k) {
         String[] answer = new String[picture.length * k];
+
         int index = 0;
-        for (int i = 0; i < picture.length; i++) {
+
+        for (String line : picture) {
             StringBuilder sb = new StringBuilder();
-            for (int j = 0; j < picture[i].length(); j++) {
-                for (int n = 0; n < k; n++) {
-                    sb.append(picture[i].charAt(j));
+
+            for (int i = 0; i < line.length(); i++) {
+                char ch = line.charAt(i);
+
+                for (int j = 0; j < k; j++) {
+                    sb.append(ch);
                 }
-            }   
-            for (int j = 0; j < k; j++) {
-                answer[index++] = sb.toString();
+            }
+
+            String expandedLine = sb.toString();
+
+            for (int i = 0; i < k; i++) {
+                answer[index++] = expandedLine;
             }
         }
+
         return answer;
     }
 }
