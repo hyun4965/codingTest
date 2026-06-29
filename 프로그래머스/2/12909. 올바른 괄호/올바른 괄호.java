@@ -1,4 +1,4 @@
-import java.util.Stack;
+import java.util.*;
 
 class Solution {
     boolean solution(String s) {
@@ -9,14 +9,14 @@ class Solution {
 
             if (c == '(') {
                 stack.push(c);
-            } else { 
-                if (stack.isEmpty()) {
-                    return false; 
+            } else {
+                if (stack.empty()) {
+                    return false;
                 }
                 stack.pop();
             }
         }
 
-        return stack.isEmpty();
+        return stack.empty();
     }
 }
